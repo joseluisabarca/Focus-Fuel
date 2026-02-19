@@ -1,0 +1,1713 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Focus Fuel Costa Rica - Snacks para Gamers</title>
+    <style>
+        /* ===== VARIABLES Y RESET ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-green: #2E8B57;
+            --primary-blue: #0066CC;
+            --dark-bg: #121212;
+            --darker-bg: #0A0A0A;
+            --light-text: #F5F5F5;
+            --gray-text: #AAAAAA;
+            --card-bg: #1E1E1E;
+            --neon-green: #00FF88;
+            --neon-blue: #3399FF;
+            --error-red: #FF4444;
+            --success-green: #00C851;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--light-text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Fuente Poppins desde Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+        /* ===== SCROLLBAR PERSONALIZADA ===== */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--darker-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-green);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-blue);
+        }
+
+        /* ===== UTILIDADES ===== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-blue));
+            color: white;
+            box-shadow: 0 4px 15px rgba(46, 139, 86, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(46, 139, 86, 0.5);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid var(--primary-green);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-green);
+            transform: translateY(-3px);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--neon-green), var(--neon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--gray-text);
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(46, 139, 86, 0.2);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-blue));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.5rem;
+            transform: rotate(45deg);
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo-text span {
+            color: var(--primary-green);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-blue));
+            transition: width 0.3s;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .nav-menu a:hover {
+            color: var(--primary-green);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 5px 0;
+            transition: all 0.3s;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--primary-green);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, transparent 0%, var(--dark-bg) 100%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--neon-green), var(--neon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--gray-text);
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== BENEFITS SECTION ===== */
+        .benefits {
+            padding: 100px 0;
+            background: var(--darker-bg);
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .benefit-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s;
+            border: 1px solid rgba(46, 139, 86, 0.1);
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary-green);
+            box-shadow: 0 10px 30px rgba(46, 139, 86, 0.2);
+        }
+
+        .benefit-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-blue));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+        }
+
+        .benefit-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--primary-green);
+        }
+
+        .benefit-card p {
+            color: var(--gray-text);
+            font-size: 0.95rem;
+        }
+
+        /* ===== PRODUCTS SECTION ===== */
+        .products {
+            padding: 100px 0;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s;
+            border: 1px solid rgba(46, 139, 86, 0.1);
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary-green);
+            box-shadow: 0 10px 30px rgba(46, 139, 86, 0.3);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--primary-green);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        .product-image {
+            height: 250px;
+            background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-blue));
+            opacity: 0.1;
+            transform: rotate(45deg);
+        }
+
+        .product-image span {
+            font-size: 5rem;
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 2;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-info .sabor {
+            color: var(--primary-green);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .product-info .descripcion {
+            color: var(--gray-text);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--neon-green);
+        }
+
+        .product-price small {
+            font-size: 0.9rem;
+            color: var(--gray-text);
+            font-weight: 400;
+        }
+
+        .btn-add {
+            background: transparent;
+            border: 2px solid var(--primary-green);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .btn-add:hover {
+            background: var(--primary-green);
+            transform: scale(1.05);
+        }
+
+        /* ===== QUIZ SECTION ===== */
+        .quiz {
+            padding: 100px 0;
+            background: var(--darker-bg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quiz::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(46, 139, 86, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 3rem;
+            position: relative;
+            z-index: 2;
+            border: 1px solid rgba(46, 139, 86, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .quiz-progress {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .progress-step {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--dark-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: var(--gray-text);
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .progress-step.active {
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-blue));
+            color: white;
+            border-color: white;
+        }
+
+        .progress-step.completed {
+            background: var(--primary-green);
+            color: white;
+        }
+
+        .progress-bar {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--dark-bg);
+            z-index: -1;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-green), var(--primary-blue));
+            transition: width 0.3s;
+        }
+
+        .quiz-question {
+            display: none;
+        }
+
+        .quiz-question.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .quiz-question h3 {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-option {
+            background: var(--dark-bg);
+            border: 2px solid rgba(46, 139, 86, 0.3);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--primary-green);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(46, 139, 86, 0.3);
+        }
+
+        .quiz-option.selected {
+            border-color: var(--primary-green);
+            background: rgba(46, 139, 86, 0.1);
+        }
+
+        .quiz-option-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .quiz-option h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-green);
+        }
+
+        .quiz-option p {
+            color: var(--gray-text);
+            font-size: 0.9rem;
+        }
+
+        .quiz-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        .quiz-nav-btn {
+            background: transparent;
+            border: 2px solid var(--primary-green);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .quiz-nav-btn:hover:not(:disabled) {
+            background: var(--primary-green);
+        }
+
+        .quiz-nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .quiz-result {
+            display: none;
+            text-align: center;
+            animation: fadeIn 0.5s;
+        }
+
+        .quiz-result.active {
+            display: block;
+        }
+
+        .result-product {
+            margin: 2rem 0;
+            padding: 2rem;
+            background: var(--dark-bg);
+            border-radius: 15px;
+            border: 2px solid var(--primary-green);
+        }
+
+        .result-product h4 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--neon-green);
+        }
+
+        .result-product p {
+            margin-bottom: 1.5rem;
+            color: var(--gray-text);
+        }
+
+        .discount-code {
+            background: rgba(46, 139, 86, 0.2);
+            padding: 1rem;
+            border-radius: 10px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            border: 2px dashed var(--primary-green);
+            margin: 1.5rem 0;
+        }
+
+        .email-capture {
+            margin-top: 2rem;
+        }
+
+        .email-capture input {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 10px;
+            border: none;
+            background: var(--dark-bg);
+            color: white;
+            border: 2px solid rgba(46, 139, 86, 0.3);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .email-capture input:focus {
+            outline: none;
+            border-color: var(--primary-green);
+        }
+
+        .email-capture .checkbox {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--gray-text);
+            margin-bottom: 1.5rem;
+        }
+
+        /* ===== SCIENCE SECTION ===== */
+        .science {
+            padding: 100px 0;
+        }
+
+        .science-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .science-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .science-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(46, 139, 86, 0.2);
+        }
+
+        .science-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .science-card h3 {
+            color: var(--primary-green);
+            margin-bottom: 1rem;
+        }
+
+        .science-card p {
+            color: var(--gray-text);
+            font-size: 0.95rem;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--darker-bg);
+            padding: 4rem 0 2rem;
+            border-top: 1px solid rgba(46, 139, 86, 0.2);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h4 {
+            color: var(--primary-green);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section a {
+            color: var(--gray-text);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary-green);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: var(--card-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--primary-green);
+            transform: translateY(-5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(46, 139, 86, 0.2);
+            color: var(--gray-text);
+            font-size: 0.9rem;
+        }
+
+        /* ===== CART MODAL ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 1px solid var(--primary-green);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(46, 139, 86, 0.2);
+        }
+
+        .cart-total {
+            margin: 1.5rem 0;
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-align: right;
+        }
+
+        .cart-total span {
+            color: var(--neon-green);
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: var(--darker-bg);
+                padding: 2rem;
+                flex-direction: column;
+                align-items: center;
+                border-bottom: 1px solid var(--primary-green);
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .hamburger.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -7px);
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .quiz-container {
+                padding: 1.5rem;
+            }
+
+            .quiz-options {
+                grid-template-columns: 1fr;
+            }
+
+            .science-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .social-links {
+                justify-content: center;
+            }
+        }
+
+        /* ===== ANIMACIONES ADICIONALES ===== */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        .glow {
+            text-shadow: 0 0 10px var(--neon-green);
+        }
+
+        /* ===== NOTIFICACIONES ===== */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary-green);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            animation: slideIn 0.3s;
+            z-index: 3000;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <div class="logo-icon">⚡</div>
+                <div class="logo-text">FOCUS<span>FUEL</span></div>
+            </div>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#productos">Productos</a></li>
+                <li><a href="#ciencia">Nuestra Ciencia</a></li>
+                <li><a href="#quiz">Quiz</a></li>
+                <li><a href="#comunidad">Comunidad</a></li>
+            </ul>
+
+            <div style="display: flex; gap: 1rem; align-items: center;">
+                <div class="cart-icon" onclick="toggleCart()">
+                    🛒
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+                <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="inicio">
+        <div class="hero-content">
+            <h1>TU <span>COMBUSTIBLE</span><br>PARA EL NEXT LEVEL</h1>
+            <p>Snacks funcionales hechos en Costa Rica para gamers que exigen lo mejor. Energía sostenida, enfoque láser y cuidado visual.</p>
+            <div class="hero-buttons">
+                <a href="#quiz" class="btn btn-primary">Descubre tu snack ideal →</a>
+                <a href="#productos" class="btn btn-secondary">Ver productos</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- BENEFITS SECTION -->
+    <section class="benefits">
+        <div class="container">
+            <h2 class="section-title">POR QUÉ FOCUS FUEL</h2>
+            <p class="section-subtitle">Diseñado por gamers, respaldado por la ciencia</p>
+            
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">🇨🇷</div>
+                    <h3>100% COSTARRICENSE</h3>
+                    <p>75% de ingredientes de productores locales. Apoyamos la economía tica.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🧠</div>
+                    <h3>CIENCIA NUTRICIONAL</h3>
+                    <p>Formulado por expertos para mejorar rendimiento cognitivo y reflejos.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🎮</div>
+                    <h3>DISEÑADO PARA GAMERS</h3>
+                    <p>Sin migajas, energía sostenida, protección contra luz azul.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">⚡</div>
+                    <h3>SABORES TICOS</h3>
+                    <p>Café de Tarrazú, Guanábana, Pejibaye... sabores que conoces.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUCTS SECTION -->
+    <section class="products" id="productos">
+        <div class="container">
+            <h2 class="section-title">NUESTROS PRODUCTOS</h2>
+            <p class="section-subtitle">Elegí tu build perfecta</p>
+
+            <div class="products-grid">
+                <!-- Producto 1: Nitro Bar -->
+                <div class="product-card">
+                    <div class="product-badge">MÁS VENDIDO</div>
+                    <div class="product-image">
+                        <span>⚡</span>
+                    </div>
+                    <div class="product-info">
+                        <h3>NITRO BAR</h3>
+                        <div class="sabor">Café Tarrazú · Guanábana · Pejibaye</div>
+                        <p class="descripcion">Energía sostenida con cafeína natural + L-Teanina. Enfoque láser por horas.</p>
+                        <div class="product-footer">
+                            <span class="product-price">₡2,200 <small>IVA inc.</small></span>
+                            <button class="btn-add" onclick="addToCart('Nitro Bar', 2200)">➕ Agregar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 2: Vision Mix -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <span>👁️</span>
+                    </div>
+                    <div class="product-info">
+                        <h3>VISION MIX</h3>
+                        <div class="sabor">Arándanos · Nueces · Chocolate 85%</div>
+                        <p class="descripcion">Protección contra luz azul. Antioxidantes para sesiones maratónicas.</p>
+                        <div class="product-footer">
+                            <span class="product-price">₡2,800 <small>IVA inc.</small></span>
+                            <button class="btn-add" onclick="addToCart('Vision Mix', 2800)">➕ Agregar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 3: React Gummies -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <span>🎯</span>
+                    </div>
+                    <div class="product-info">
+                        <h3>REACT GUMMIES</h3>
+                        <div class="sabor">Mango-Cas · Maracuyá-Jengibre</div>
+                        <p class="descripcion">Reflejos rápidos con té verde + vitamina B12. Energía inmediata sin bajón.</p>
+                        <div class="product-footer">
+                            <span class="product-price">₡1,800 <small>IVA inc.</small></span>
+                            <button class="btn-add" onclick="addToCart('React Gummies', 1800)">➕ Agregar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 4: Starter Pack -->
+                <div class="product-card">
+                    <div class="product-badge">AHORRO 15%</div>
+                    <div class="product-image">
+                        <span>📦</span>
+                    </div>
+                    <div class="product-info">
+                        <h3>STARTER PACK</h3>
+                        <div class="sabor">1 de cada producto</div>
+                        <p class="descripcion">El combo completo para que encuentres tu favorito. ¡3 snacks en 1!</p>
+                        <div class="product-footer">
+                            <span class="product-price">₡5,900 <small>₡6,800</small></span>
+                            <button class="btn-add" onclick="addToCart('Starter Pack', 5900)">➕ Agregar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- QUIZ SECTION -->
+    <section class="quiz" id="quiz">
+        <div class="container">
+            <h2 class="section-title">¿CUÁL ES TU COMBUSTIBLE IDEAL?</h2>
+            <p class="section-subtitle">Respondé 4 preguntas y descubrí tu snack perfecto + 10% de descuento</p>
+
+            <div class="quiz-container">
+                <!-- Progress Bar -->
+                <div class="quiz-progress">
+                    <div class="progress-step active" id="step1">1</div>
+                    <div class="progress-step" id="step2">2</div>
+                    <div class="progress-step" id="step3">3</div>
+                    <div class="progress-step" id="step4">4</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
+                    </div>
+                </div>
+
+                <!-- Quiz Questions Container -->
+                <div id="quizQuestions">
+                    <!-- Pregunta 1 -->
+                    <div class="quiz-question active" id="q1">
+                        <h3>¿Cuál es tu momento favorito para jugar?</h3>
+                        <div class="quiz-options">
+                            <div class="quiz-option" onclick="selectAnswer(1, 'A')">
+                                <div class="quiz-option-icon">🌅</div>
+                                <h4>Mañana</h4>
+                                <p>Antes del trabajo o clases. Busco energía rápida.</p>
+                            </div>
+                            <div class="quiz-option" onclick="selectAnswer(1, 'B')">
+                                <div class="quiz-option-icon">☀️</div>
+                                <h4>Tarde</h4>
+                                <p>Sesiones casuales. Busco algo ligero.</p>
+                            </div>
+                            <div class="quiz-option" onclick="selectAnswer(1, 'C')">
+                                <div class="quiz-option-icon">🌙</div>
+                                <h4>Noche / Madrugada</h4>
+                                <p>Ranked y streams. Necesito energía sostenida.</p>
+                            </div>
+                            <div class="quiz-option" onclick="selectAnswer(1, 'D')">
+                                <div class="quiz-option-icon">📅</div>
+                                <h4>Fines de semana</h4>
+                                <p>Maratones gaming. Busco variedad y resistencia.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pregunta 2 -->
+                    <div class="quiz-question" id="q2">
+                        <h3>¿Cuál es tu mayor desafío en sesiones largas?</h3>
+                        <div class="quiz-options">
+                            <div class="quiz-option" onclick="selectAnswer(2, 'A')">
+                                <div class="quiz-option-icon">😴</div>
+                                <h4>Me da sueño</h4>
+                                <p>Pierdo concentración después de 1 hora.</p>
+                            </div>
+                            <div class="quiz-option" onclick="selectAnswer(2, 'B')">
+                                <div class="quiz-option-icon">👀</div>
+                                <h4>Fatiga visual</h4>
+                                <p>Me arden los ojos, veo borroso.</p>
+                            </div>
+                            <div class="quiz-option" onclick="selectAnswer(2, 'C')">
+                                <div class="quiz-option-icon">🍔</div>
+                                <h4>Hambre</h4>
+                                <p>Como cualquier cosa y me arrepiento.</p>
+                            </div>
+                            <div class="quiz-option" onclick="selectAnswer(2, 'D')">
+                                <div class="quiz-option-icon">📉</div>
+                                <h4>Bajo rendimiento</h4>
+                                <p>Después de 2 horas juego peor.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pregunta 3 -->
+                    <div class="quiz-question" id="q3">
+                        <h3>¿Qué tipo de juegos preferís?</h3>
+                        <div class="quiz-options">
+                            <div class="quiz-option" onclick="selectAnswer(3, 'A')">
+                                <div class="quiz-option-icon">🔫</div>
+                                <h4>Shooters competitivos</h4>
+                                <p>Valorant, CS:GO, Fortnite</p>
+                            </div>
+                            <div class="quiz-option" onclick="selectAnswer(3, 'B')">
+                                <div class="quiz-option-icon">⚔️</div>
+                                <h4>MOBA / Estrategia</h4>
+                                <p>LoL, Dota 2, Age of Empires</p>
+                            </div>
+                            <div class="quiz-option" onclick="selectAnswer(3, 'C')">
+                                <div class="quiz-option-icon">🗺️</div>
+                                <h4>RPG / Mundo abierto</h4>
+                                <p>Genshin, Zelda, Skyrim</p>
+                            </div>
+                            <div class="quiz-option" onclick="selectAnswer(3, 'D')">
+                                <div class="quiz-option-icon">⚽</div>
+                                <h4>Deportes / Carreras</h4>
+                                <p>FIFA, F1, NBA 2K</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pregunta 4 -->
+                    <div class="quiz-question" id="q4">
+                        <h3>¿Qué buscás en un snack?</h3>
+                        <div class="quiz-options">
+                            <div class="quiz-option" onclick="selectAnswer(4, 'A')">
+                                <div class="quiz-option-icon">⚡</div>
+                                <h4>Energía inmediata</h4>
+                                <p>Sin bajón, que dure horas.</p>
+                            </div>
+                            <div class="quiz-option" onclick="selectAnswer(4, 'B')">
+                                <div class="quiz-option-icon">🖥️</div>
+                                <h4>Práctico</h4>
+                                <p>Que no ensucie el teclado.</p>
+                            </div>
+                            <div class="quiz-option" onclick="selectAnswer(4, 'C')">
+                                <div class="quiz-option-icon">👁️</div>
+                                <h4>Cuidado visual</h4>
+                                <p>Protección para mis ojos.</p>
+                            </div>
+                            <div class="quiz-option" onclick="selectAnswer(4, 'D')">
+                                <div class="quiz-option-icon">🎯</div>
+                                <h4>Todo lo anterior</h4>
+                                <p>Quiero el pack completo.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quiz Result -->
+                <div class="quiz-result" id="quizResult">
+                    <div class="result-product" id="resultProduct">
+                        <!-- Se llena con JS -->
+                    </div>
+                    
+                    <div class="discount-code" id="discountCode">FOCUS10</div>
+                    
+                    <div class="email-capture">
+                        <input type="email" id="quizEmail" placeholder="Tu email para recibir el cupón">
+                        <div class="checkbox">
+                            <input type="checkbox" id="discordJoin" checked>
+                            <label for="discordJoin">Quiero unirme a la comunidad Discord</label>
+                        </div>
+                        <button class="btn btn-primary" onclick="captureLead()" style="width: 100%;">Obtener mi descuento</button>
+                    </div>
+                </div>
+
+                <!-- Quiz Navigation -->
+                <div class="quiz-navigation">
+                    <button class="quiz-nav-btn" id="prevBtn" onclick="prevQuestion()" disabled>← Anterior</button>
+                    <button class="quiz-nav-btn" id="nextBtn" onclick="nextQuestion()">Siguiente →</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SCIENCE SECTION -->
+    <section class="science" id="ciencia">
+        <div class="container">
+            <h2 class="section-title">NUESTRA CIENCIA</h2>
+            <p class="section-subtitle">Ingredientes que mejoran tu rendimiento</p>
+
+            <div class="science-grid">
+                <div class="science-card">
+                    <div class="science-icon">🧪</div>
+                    <h3>CAFEÍNA + L-TEANINA</h3>
+                    <p>Sinergia perfecta para enfoque sostenido sin nerviosismo. La L-Teanina suaviza el efecto de la cafeína.</p>
+                </div>
+                <div class="science-card">
+                    <div class="science-icon">🫐</div>
+                    <h3>ANTOCIANINAS</h3>
+                    <p>Presentes en arándanos. Mejoran la visión nocturna y protegen contra la luz azul de las pantallas.</p>
+                </div>
+                <div class="science-card">
+                    <div class="science-icon">⚡</div>
+                    <h3>VITAMINA B12</h3>
+                    <p>Metilcobalamina de alta biodisponibilidad. Reduce la fatiga y mejora la función cognitiva.</p>
+                </div>
+                <div class="science-card">
+                    <div class="science-icon">🌰</div>
+                    <h3>OMEGA-7</h3>
+                    <p>De las nueces de macadamia. Lubricación ocular específica para horas frente a pantallas.</p>
+                </div>
+                <div class="science-card">
+                    <div class="science-icon">🍫</div>
+                    <h3>TEOBROMINA</h3>
+                    <p>Del cacao 85%. Estimulante suave que mejora el flujo sanguíneo cerebral.</p>
+                </div>
+                <div class="science-card">
+                    <div class="science-icon">🇨🇷</div>
+                    <h3>INGREDIENTES LOCALES</h3>
+                    <p>Café de Tarrazú, miel de Puriscal, cacao de la Zona Sur. Trazabilidad total.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CART MODAL -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Tu carrito</h2>
+                <button class="modal-close" onclick="toggleCart()">&times;</button>
+            </div>
+            <div id="cartItems">
+                <!-- Se llena con JS -->
+            </div>
+            <div class="cart-total" id="cartTotal">
+                Total: <span>₡0</span>
+            </div>
+            <button class="btn btn-primary" onclick="checkout()" style="width: 100%;">Finalizar compra</button>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer id="comunidad">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>FOCUS FUEL CR</h4>
+                    <p>Snacks funcionales hechos en Costa Rica para la comunidad gamer. Energía sostenida, enfoque láser y orgullo tico.</p>
+                    <div class="social-links">
+                        <a href="#">📱</a>
+                        <a href="#">📘</a>
+                        <a href="#">🎮</a>
+                        <a href="#">📸</a>
+                        <a href="#">💬</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Enlaces rápidos</h4>
+                    <ul>
+                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="#productos">Productos</a></li>
+                        <li><a href="#ciencia">Nuestra ciencia</a></li>
+                        <li><a href="#quiz">Quiz</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Comunidad</h4>
+                    <ul>
+                        <li><a href="#">Discord</a></li>
+                        <li><a href="#">Torneos</a></li>
+                        <li><a href="#">Streamers</a></li>
+                        <li><a href="#">Afiliados</a></li>
+                        <li><a href="#">Embajadores</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contacto</h4>
+                    <ul>
+                        <li>📞 +506 8888-8888</li>
+                        <li>📧 hola@focusfuel.cr</li>
+                        <li>📍 San José, Costa Rica</li>
+                        <li>🕒 Lun-Vie: 9am-6pm</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2024 Focus Fuel Costa Rica. Hecho con ❤️ para la comunidad gamer tica.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ========== VARIABLES GLOBALES ==========
+        let currentQuestion = 1;
+        const totalQuestions = 4;
+        let answers = {
+            1: null,
+            2: null,
+            3: null,
+            4: null
+        };
+        let cart = [];
+        
+        // ========== MENÚ HAMBURGUESA ==========
+        function toggleMenu() {
+            const menu = document.getElementById('navMenu');
+            const hamburger = document.getElementById('hamburger');
+            menu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        }
+
+        // Cerrar menú al hacer clic en un enlace
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navMenu').classList.remove('active');
+                document.getElementById('hamburger').classList.remove('active');
+            });
+        });
+
+        // ========== QUIZ LOGIC ==========
+        function selectAnswer(question, answer) {
+            // Remover selected de todas las opciones de esta pregunta
+            const currentQ = document.getElementById(`q${question}`);
+            const options = currentQ.querySelectorAll('.quiz-option');
+            options.forEach(opt => opt.classList.remove('selected'));
+            
+            // Agregar selected a la opción elegida
+            event.currentTarget.classList.add('selected');
+            
+            // Guardar respuesta
+            answers[question] = answer;
+            
+            // Habilitar botón siguiente si es necesario
+            if (question === currentQuestion) {
+                document.getElementById('nextBtn').disabled = false;
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < totalQuestions) {
+                // Validar que haya respuesta
+                if (!answers[currentQuestion]) {
+                    alert('Por favor seleccioná una opción antes de continuar');
+                    return;
+                }
+                
+                // Ocultar pregunta actual
+                document.getElementById(`q${currentQuestion}`).classList.remove('active');
+                
+                // Actualizar step
+                document.getElementById(`step${currentQuestion}`).classList.add('completed');
+                
+                // Incrementar
+                currentQuestion++;
+                
+                // Mostrar nueva pregunta
+                document.getElementById(`q${currentQuestion}`).classList.add('active');
+                document.getElementById(`step${currentQuestion}`).classList.add('active');
+                
+                // Actualizar progress bar
+                const progress = ((currentQuestion - 1) / totalQuestions) * 100;
+                document.getElementById('progressFill').style.width = progress + '%';
+                
+                // Actualizar botones
+                document.getElementById('prevBtn').disabled = false;
+                
+                if (currentQuestion === totalQuestions) {
+                    document.getElementById('nextBtn').innerHTML = 'Ver resultado →';
+                }
+            } else {
+                // Mostrar resultado
+                showResult();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestion > 1) {
+                // Ocultar actual
+                document.getElementById(`q${currentQuestion}`).classList.remove('active');
+                document.getElementById(`step${currentQuestion}`).classList.remove('active');
+                
+                // Decrementar
+                currentQuestion--;
+                
+                // Mostrar anterior
+                document.getElementById(`q${currentQuestion}`).classList.add('active');
+                
+                // Actualizar progress bar
+                const progress = ((currentQuestion - 1) / totalQuestions) * 100;
+                document.getElementById('progressFill').style.width = progress + '%';
+                
+                // Actualizar botones
+                if (currentQuestion === 1) {
+                    document.getElementById('prevBtn').disabled = true;
+                }
+                
+                document.getElementById('nextBtn').innerHTML = 'Siguiente →';
+                document.getElementById('nextBtn').disabled = !answers[currentQuestion];
+            }
+        }
+
+        function showResult() {
+            // Validar última respuesta
+            if (!answers[4]) {
+                alert('Por favor seleccioná una opción antes de continuar');
+                return;
+            }
+            
+            // Ocultar preguntas y navegación
+            document.getElementById('quizQuestions').style.display = 'none';
+            document.querySelector('.quiz-navigation').style.display = 'none';
+            
+            // Calcular resultado basado en respuestas
+            let product = calculateProduct();
+            
+            // Mostrar resultado
+            const resultDiv = document.getElementById('quizResult');
+            resultDiv.classList.add('active');
+            
+            // Llenar resultado
+            const resultProduct = document.getElementById('resultProduct');
+            resultProduct.innerHTML = `
+                <h4>${product.nombre}</h4>
+                <p>${product.descripcion}</p>
+                <img src="https://via.placeholder.com/200x200/2E8B57/ffffff?text=${product.icono}" style="width: 150px; margin: 1rem auto; display: block;">
+            `;
+        }
+
+        function calculateProduct() {
+            // Algoritmo de recomendación basado en respuestas
+            const ans = answers;
+            
+            // Perfil 1: Competitivo (shooters, necesita reflejos)
+            if (ans[3] === 'A' && (ans[4] === 'A' || ans[4] === 'D')) {
+                return {
+                    nombre: '⚡ REACT GUMMIES',
+                    descripcion: 'Eres un F ragger Relámpago. Necesitás reflejos y energía inmediata. Nuestras React Gummies con té verde y vitamina B12 son tu arma secreta para reacciones más rápidas.',
+                    icono: 'REACT'
+                };
+            }
+            
+            // Perfil 2: Estratega nocturno (MOBA, largas sesiones)
+            if ((ans[1] === 'C' || ans[1] === 'D') && (ans[2] === 'B' || ans[2] === 'D') && ans[4] === 'C') {
+                return {
+                    nombre: '👁️ VISION MIX',
+                    descripcion: 'Sos un Estratega Nocturno. Pasás horas planeando tu próximo movimiento. Tu aliado: Vision Mix. Arándanos + nueces para proteger tu vista y mantener tu cerebro activo.',
+                    icono: 'VISION'
+                };
+            }
+            
+            // Perfil 3: Tryhard de ranked (necesita energía sostenida)
+            if ((ans[2] === 'A' || ans[2] === 'D') && (ans[4] === 'A' || ans[4] === 'B')) {
+                return {
+                    nombre: '⚡ NITRO BAR',
+                    descripcion: 'Sos un Tryhard de Ranked. La constancia es tu fuerte. La Nitro Bar te dará energía sostenida gracias al café de Tarrazú y la avena, sin el temido bajón.',
+                    icono: 'NITRO'
+                };
+            }
+            
+            // Perfil 4: Completista (quiere probar todo)
+            if (ans[4] === 'D' || (ans[1] === 'D' && ans[3] === 'C')) {
+                return {
+                    nombre: '📦 STARTER PACK',
+                    descripcion: 'Sos un Completista. Querés experimentar todo lo que el juego ofrece. El Starter Pack es para vos: llevá los 3 snacks y encontrá tu favorito.',
+                    icono: 'PACK'
+                };
+            }
+            
+            // Perfil 5: Casual saludable (default)
+            return {
+                nombre: '🌟 MIX PERSONALIZADO',
+                descripcion: 'Basado en tus respuestas, te recomendamos comenzar con nuestro Starter Pack para descubrir cuál se adapta mejor a tu estilo de juego. ¡10% de descuento!',
+                icono: 'FOCUS'
+            };
+        }
+
+        function captureLead() {
+            const email = document.getElementById('quizEmail').value;
+            if (!email) {
+                alert('Por favor ingresá tu email para recibir el descuento');
+                return;
+            }
+            
+            if (!email.includes('@') || !email.includes('.')) {
+                alert('Por favor ingresá un email válido');
+                return;
+            }
+            
+            const joinDiscord = document.getElementById('discordJoin').checked;
+            
+            // Aquí se enviaría a un backend real
+            showNotification('✅ Cupón enviado a ' + email + (joinDiscord ? ' ¡Bienvenido a Discord!' : ''));
+            
+            // Redirigir a productos
+            setTimeout(() => {
+                window.location.href = '#productos';
+            }, 2000);
+        }
+
+        // ========== CART FUNCTIONS ==========
+        function addToCart(product, price) {
+            cart.push({ product, price });
+            updateCart();
+            showNotification('✅ ' + product + ' agregado al carrito');
+        }
+
+        function updateCart() {
+            const count = cart.length;
+            document.getElementById('cartCount').innerText = count;
+            
+            // Actualizar modal si está abierto
+            if (document.getElementById('cartModal').classList.contains('active')) {
+                displayCartItems();
+            }
+        }
+
+        function displayCartItems() {
+            const cartItemsDiv = document.getElementById('cartItems');
+            let html = '';
+            let total = 0;
+            
+            cart.forEach((item, index) => {
+                total += item.price;
+                html += `
+                    <div class="cart-item">
+                        <span>${item.product}</span>
+                        <span>₡${item.price.toLocaleString()}</span>
+                    </div>
+                `;
+            });
+            
+            cartItemsDiv.innerHTML = html;
+            document.getElementById('cartTotal').innerHTML = `Total: <span>₡${total.toLocaleString()}</span>`;
+        }
+
+        function toggleCart() {
+            const modal = document.getElementById('cartModal');
+            modal.classList.toggle('active');
+            
+            if (modal.classList.contains('active')) {
+                displayCartItems();
+            }
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert('El carrito está vacío');
+                return;
+            }
+            
+            alert('¡Gracias por tu compra! (Modo demostración - no se procesó el pago)');
+            cart = [];
+            updateCart();
+            toggleCart();
+        }
+
+        // ========== NOTIFICATIONS ==========
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.innerText = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // ========== SMOOTH SCROLL ==========
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // ========== INICIALIZACIÓN ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            // Reset quiz
+            answers = {1: null, 2: null, 3: null, 4: null};
+        });
+    </script>
+</body>
+</html>
