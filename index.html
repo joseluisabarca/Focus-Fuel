@@ -1,1713 +1,1141 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Focus Fuel Costa Rica - Snacks para Gamers</title>
-    <style>
-        /* ===== VARIABLES Y RESET ===== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary-green: #2E8B57;
-            --primary-blue: #0066CC;
-            --dark-bg: #121212;
-            --darker-bg: #0A0A0A;
-            --light-text: #F5F5F5;
-            --gray-text: #AAAAAA;
-            --card-bg: #1E1E1E;
-            --neon-green: #00FF88;
-            --neon-blue: #3399FF;
-            --error-red: #FF4444;
-            --success-green: #00C851;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--dark-bg);
-            color: var(--light-text);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Fuente Poppins desde Google Fonts */
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
-
-        /* ===== SCROLLBAR PERSONALIZADA ===== */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--darker-bg);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--primary-green);
-            border-radius: 5px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--primary-blue);
-        }
-
-        /* ===== UTILIDADES ===== */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 12px 30px;
-            border-radius: 50px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: none;
-            font-size: 16px;
-            letter-spacing: 0.5px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary-green), var(--primary-blue));
-            color: white;
-            box-shadow: 0 4px 15px rgba(46, 139, 86, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(46, 139, 86, 0.5);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: white;
-            border: 2px solid var(--primary-green);
-        }
-
-        .btn-secondary:hover {
-            background: var(--primary-green);
-            transform: translateY(-3px);
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            text-align: center;
-            background: linear-gradient(135deg, var(--neon-green), var(--neon-blue));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            color: var(--gray-text);
-            margin-bottom: 3rem;
-            font-size: 1.1rem;
-        }
-
-        /* ===== HEADER ===== */
-        header {
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(10px);
-            position: fixed;
-            width: 100%;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(46, 139, 86, 0.2);
-        }
-
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 5%;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--primary-green), var(--primary-blue));
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 1.5rem;
-            transform: rotate(45deg);
-        }
-
-        .logo-text {
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-
-        .logo-text span {
-            color: var(--primary-green);
-        }
-
-        .nav-menu {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-menu a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-            position: relative;
-        }
-
-        .nav-menu a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(135deg, var(--primary-green), var(--primary-blue));
-            transition: width 0.3s;
-        }
-
-        .nav-menu a:hover::after {
-            width: 100%;
-        }
-
-        .nav-menu a:hover {
-            color: var(--primary-green);
-        }
-
-        .hamburger {
-            display: none;
-            cursor: pointer;
-        }
-
-        .hamburger span {
-            display: block;
-            width: 25px;
-            height: 3px;
-            background: white;
-            margin: 5px 0;
-            transition: all 0.3s;
-        }
-
-        .cart-icon {
-            position: relative;
-            cursor: pointer;
-        }
-
-        .cart-count {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: var(--primary-green);
-            color: white;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.7rem;
-            font-weight: 600;
-        }
-
-        /* ===== HERO SECTION ===== */
-        .hero {
-            height: 100vh;
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            display: flex;
-            align-items: center;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at center, transparent 0%, var(--dark-bg) 100%);
-            pointer-events: none;
-        }
-
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 20px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero h1 {
-            font-size: 4rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            animation: fadeInUp 1s ease;
-        }
-
-        .hero h1 span {
-            background: linear-gradient(135deg, var(--neon-green), var(--neon-blue));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            color: var(--gray-text);
-            margin-bottom: 2rem;
-            animation: fadeInUp 1s ease 0.2s both;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            animation: fadeInUp 1s ease 0.4s both;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* ===== BENEFITS SECTION ===== */
-        .benefits {
-            padding: 100px 0;
-            background: var(--darker-bg);
-        }
-
-        .benefits-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .benefit-card {
-            background: var(--card-bg);
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-            transition: transform 0.3s;
-            border: 1px solid rgba(46, 139, 86, 0.1);
-        }
-
-        .benefit-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--primary-green);
-            box-shadow: 0 10px 30px rgba(46, 139, 86, 0.2);
-        }
-
-        .benefit-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, var(--primary-green), var(--primary-blue));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            font-size: 2rem;
-        }
-
-        .benefit-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            color: var(--primary-green);
-        }
-
-        .benefit-card p {
-            color: var(--gray-text);
-            font-size: 0.95rem;
-        }
-
-        /* ===== PRODUCTS SECTION ===== */
-        .products {
-            padding: 100px 0;
-        }
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .product-card {
-            background: var(--card-bg);
-            border-radius: 15px;
-            overflow: hidden;
-            transition: all 0.3s;
-            border: 1px solid rgba(46, 139, 86, 0.1);
-            position: relative;
-        }
-
-        .product-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--primary-green);
-            box-shadow: 0 10px 30px rgba(46, 139, 86, 0.3);
-        }
-
-        .product-badge {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: var(--primary-green);
-            color: white;
-            padding: 0.3rem 1rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            z-index: 2;
-        }
-
-        .product-image {
-            height: 250px;
-            background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .product-image::before {
-            content: '';
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(135deg, var(--primary-green), var(--primary-blue));
-            opacity: 0.1;
-            transform: rotate(45deg);
-        }
-
-        .product-image span {
-            font-size: 5rem;
-            font-weight: 800;
-            color: rgba(255, 255, 255, 0.1);
-            position: relative;
-            z-index: 2;
-        }
-
-        .product-info {
-            padding: 1.5rem;
-        }
-
-        .product-info h3 {
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .product-info .sabor {
-            color: var(--primary-green);
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
-
-        .product-info .descripcion {
-            color: var(--gray-text);
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
-
-        .product-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .product-price {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--neon-green);
-        }
-
-        .product-price small {
-            font-size: 0.9rem;
-            color: var(--gray-text);
-            font-weight: 400;
-        }
-
-        .btn-add {
-            background: transparent;
-            border: 2px solid var(--primary-green);
-            color: white;
-            padding: 0.5rem 1.5rem;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: 500;
-        }
-
-        .btn-add:hover {
-            background: var(--primary-green);
-            transform: scale(1.05);
-        }
-
-        /* ===== QUIZ SECTION ===== */
-        .quiz {
-            padding: 100px 0;
-            background: var(--darker-bg);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .quiz::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(46, 139, 86, 0.1) 0%, transparent 70%);
-            animation: rotate 20s linear infinite;
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .quiz-container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 3rem;
-            position: relative;
-            z-index: 2;
-            border: 1px solid rgba(46, 139, 86, 0.3);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-        }
-
-        .quiz-progress {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 2rem;
-            position: relative;
-        }
-
-        .progress-step {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--dark-bg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            color: var(--gray-text);
-            border: 2px solid transparent;
-            transition: all 0.3s;
-        }
-
-        .progress-step.active {
-            background: linear-gradient(135deg, var(--primary-green), var(--primary-blue));
-            color: white;
-            border-color: white;
-        }
-
-        .progress-step.completed {
-            background: var(--primary-green);
-            color: white;
-        }
-
-        .progress-bar {
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: var(--dark-bg);
-            z-index: -1;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary-green), var(--primary-blue));
-            transition: width 0.3s;
-        }
-
-        .quiz-question {
-            display: none;
-        }
-
-        .quiz-question.active {
-            display: block;
-            animation: fadeIn 0.5s;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateX(20px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        .quiz-question h3 {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-
-        .quiz-options {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .quiz-option {
-            background: var(--dark-bg);
-            border: 2px solid rgba(46, 139, 86, 0.3);
-            border-radius: 10px;
-            padding: 1.5rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .quiz-option:hover {
-            border-color: var(--primary-green);
-            transform: translateY(-5px);
-            box-shadow: 0 5px 20px rgba(46, 139, 86, 0.3);
-        }
-
-        .quiz-option.selected {
-            border-color: var(--primary-green);
-            background: rgba(46, 139, 86, 0.1);
-        }
-
-        .quiz-option-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .quiz-option h4 {
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-            color: var(--primary-green);
-        }
-
-        .quiz-option p {
-            color: var(--gray-text);
-            font-size: 0.9rem;
-        }
-
-        .quiz-navigation {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 2rem;
-        }
-
-        .quiz-nav-btn {
-            background: transparent;
-            border: 2px solid var(--primary-green);
-            color: white;
-            padding: 0.8rem 2rem;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: 500;
-        }
-
-        .quiz-nav-btn:hover:not(:disabled) {
-            background: var(--primary-green);
-        }
-
-        .quiz-nav-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .quiz-result {
-            display: none;
-            text-align: center;
-            animation: fadeIn 0.5s;
-        }
-
-        .quiz-result.active {
-            display: block;
-        }
-
-        .result-product {
-            margin: 2rem 0;
-            padding: 2rem;
-            background: var(--dark-bg);
-            border-radius: 15px;
-            border: 2px solid var(--primary-green);
-        }
-
-        .result-product h4 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            color: var(--neon-green);
-        }
-
-        .result-product p {
-            margin-bottom: 1.5rem;
-            color: var(--gray-text);
-        }
-
-        .discount-code {
-            background: rgba(46, 139, 86, 0.2);
-            padding: 1rem;
-            border-radius: 10px;
-            font-size: 1.5rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            border: 2px dashed var(--primary-green);
-            margin: 1.5rem 0;
-        }
-
-        .email-capture {
-            margin-top: 2rem;
-        }
-
-        .email-capture input {
-            width: 100%;
-            padding: 1rem;
-            border-radius: 10px;
-            border: none;
-            background: var(--dark-bg);
-            color: white;
-            border: 2px solid rgba(46, 139, 86, 0.3);
-            margin-bottom: 1rem;
-            font-size: 1rem;
-        }
-
-        .email-capture input:focus {
-            outline: none;
-            border-color: var(--primary-green);
-        }
-
-        .email-capture .checkbox {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--gray-text);
-            margin-bottom: 1.5rem;
-        }
-
-        /* ===== SCIENCE SECTION ===== */
-        .science {
-            padding: 100px 0;
-        }
-
-        .science-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .science-card {
-            background: var(--card-bg);
-            border-radius: 15px;
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.3s;
-        }
-
-        .science-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(46, 139, 86, 0.2);
-        }
-
-        .science-icon {
-            width: 60px;
-            height: 60px;
-            background: var(--primary-green);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            font-size: 1.5rem;
-        }
-
-        .science-card h3 {
-            color: var(--primary-green);
-            margin-bottom: 1rem;
-        }
-
-        .science-card p {
-            color: var(--gray-text);
-            font-size: 0.95rem;
-        }
-
-        /* ===== FOOTER ===== */
-        footer {
-            background: var(--darker-bg);
-            padding: 4rem 0 2rem;
-            border-top: 1px solid rgba(46, 139, 86, 0.2);
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .footer-section h4 {
-            color: var(--primary-green);
-            margin-bottom: 1.5rem;
-            font-size: 1.2rem;
-        }
-
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section ul li {
-            margin-bottom: 0.8rem;
-        }
-
-        .footer-section a {
-            color: var(--gray-text);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-section a:hover {
-            color: var(--primary-green);
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .social-links a {
-            width: 40px;
-            height: 40px;
-            background: var(--card-bg);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-        }
-
-        .social-links a:hover {
-            background: var(--primary-green);
-            transform: translateY(-5px);
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(46, 139, 86, 0.2);
-            color: var(--gray-text);
-            font-size: 0.9rem;
-        }
-
-        /* ===== CART MODAL ===== */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: var(--card-bg);
-            padding: 2rem;
-            border-radius: 15px;
-            max-width: 500px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            border: 1px solid var(--primary-green);
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 2rem;
-            cursor: pointer;
-        }
-
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(46, 139, 86, 0.2);
-        }
-
-        .cart-total {
-            margin: 1.5rem 0;
-            font-size: 1.3rem;
-            font-weight: 700;
-            text-align: right;
-        }
-
-        .cart-total span {
-            color: var(--neon-green);
-        }
-
-        /* ===== RESPONSIVE DESIGN ===== */
-        @media (max-width: 768px) {
-            .nav-menu {
-                display: none;
-                position: fixed;
-                top: 70px;
-                left: 0;
-                width: 100%;
-                background: var(--darker-bg);
-                padding: 2rem;
-                flex-direction: column;
-                align-items: center;
-                border-bottom: 1px solid var(--primary-green);
-            }
-
-            .nav-menu.active {
-                display: flex;
-            }
-
-            .hamburger {
-                display: block;
-            }
-
-            .hamburger.active span:nth-child(1) {
-                transform: rotate(45deg) translate(5px, 5px);
-            }
-
-            .hamburger.active span:nth-child(2) {
-                opacity: 0;
-            }
-
-            .hamburger.active span:nth-child(3) {
-                transform: rotate(-45deg) translate(7px, -7px);
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .quiz-container {
-                padding: 1.5rem;
-            }
-
-            .quiz-options {
-                grid-template-columns: 1fr;
-            }
-
-            .science-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-
-            .social-links {
-                justify-content: center;
-            }
-        }
-
-        /* ===== ANIMACIONES ADICIONALES ===== */
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-
-        .glow {
-            text-shadow: 0 0 10px var(--neon-green);
-        }
-
-        /* ===== NOTIFICACIONES ===== */
-        .notification {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: var(--primary-green);
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 10px;
-            animation: slideIn 0.3s;
-            z-index: 3000;
-        }
-
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Focus Fuel Costa Rica — Snacks para Gamers</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Exo+2:ital,wght@0,300;0,400;0,600;0,800;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --g:   #00FF88;
+      --b:   #00D4FF;
+      --dim: #0B7A4B;
+      --red: #FF3B6F;
+      --bg0: #070B0F;
+      --bg1: #0D1117;
+      --bg2: #131C24;
+      --bg3: #1B2733;
+      --txt: #E8F4F0;
+      --muted: #6B8FA3;
+      --glass: rgba(13,17,23,0.72);
+      --glow-g: 0 0 24px rgba(0,255,136,0.45);
+      --glow-b: 0 0 24px rgba(0,212,255,0.45);
+      --font-display: 'Rajdhani', sans-serif;
+      --font-body: 'Exo 2', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); background: var(--bg0); color: var(--txt); overflow-x: hidden; }
+    section, footer, header { background-color: inherit; }
+    input, textarea, select { cursor: text !important; }
+    button, a, [onclick], label, .quiz-opt, .faq-q, .k-opt { cursor: pointer !important; }
+
+    /* CURSOR - only on non-touch devices */
+    #cursor { width: 14px; height: 14px; border: 2px solid var(--g); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 99999; transform: translate(-50%,-50%); transition: transform .12s; display: none; }
+    #cursor-ring { width: 38px; height: 38px; border: 1px solid rgba(0,255,136,.3); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 99998; transform: translate(-50%,-50%); display: none; }
+    @media (pointer: fine) { #cursor, #cursor-ring { display: block; } }
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg0); }
+    ::-webkit-scrollbar-thumb { background: var(--dim); border-radius: 3px; }
+
+    #canvas { position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: .4; }
+
+    /* UTILS */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .grad-text { background: linear-gradient(120deg, var(--g), var(--b)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 32px; font-family: var(--font-display); font-size: 1rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; text-decoration: none; border: none; border-radius: 3px; cursor: pointer; transition: all .25s; position: relative; overflow: hidden; }
+    .btn::before { content: ''; position: absolute; inset: 0; background: linear-gradient(120deg, transparent 40%, rgba(255,255,255,.08) 50%, transparent 60%); transform: translateX(-100%); transition: transform .4s; }
+    .btn:hover::before { transform: translateX(100%); }
+    .btn-primary { background: linear-gradient(120deg, var(--g), var(--b)); color: #070B0F; box-shadow: var(--glow-g); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 36px rgba(0,255,136,.6); }
+    .btn-ghost { background: transparent; color: var(--txt); border: 1px solid rgba(0,255,136,.4); }
+    .btn-ghost:hover { border-color: var(--g); color: var(--g); transform: translateY(-2px); }
+
+    /* SECTION TITLES */
+    .s-label { font-family: var(--font-display); font-size: .75rem; letter-spacing: .22em; font-weight: 600; color: var(--g); text-transform: uppercase; display: flex; align-items: center; gap: 10px; justify-content: center; margin-bottom: 14px; }
+    .s-label::before,.s-label::after { content: ''; flex: 0 0 32px; height: 1px; background: var(--g); opacity: .5; }
+    .s-title { font-family: var(--font-display); font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 700; line-height: 1.1; text-align: center; margin-bottom: 16px; }
+    .s-sub { text-align: center; color: var(--muted); font-size: 1rem; max-width: 560px; margin: 0 auto 60px; line-height: 1.7; }
+
+    /* REVEAL */
+    .reveal { opacity: 1; transform: none; }
+
+    /* HEADER */
+    header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(7,11,15,.88); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(0,255,136,.1); transition: border-color .3s; }
+    header.scrolled { border-bottom-color: rgba(0,255,136,.25); }
+    .nav { display: flex; align-items: center; justify-content: space-between; padding: 0 5%; height: 68px; max-width: 1400px; margin: 0 auto; }
+    .logo { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-size: 1.55rem; font-weight: 700; letter-spacing: .04em; color: var(--txt); text-decoration: none; }
+    .logo-mark { width: 36px; height: 36px; background: linear-gradient(135deg, var(--g), var(--b)); clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: #070B0F; font-weight: 900; }
+    .logo em { color: var(--g); font-style: normal; }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a { font-family: var(--font-display); font-weight: 600; font-size: .95rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color .2s; position: relative; }
+    .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--g); transition: width .3s; }
+    .nav-links a:hover { color: var(--g); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .cart-btn { position: relative; background: none; border: 1px solid rgba(0,255,136,.25); color: var(--txt); padding: 8px 14px; border-radius: 3px; cursor: pointer; font-family: var(--font-display); font-size: .9rem; font-weight: 600; transition: border-color .2s; display: flex; align-items: center; gap: 6px; cursor: pointer; }
+    .cart-btn:hover { border-color: var(--g); color: var(--g); }
+    .cart-badge { background: var(--g); color: #070B0F; width: 20px; height: 20px; border-radius: 50%; font-size: .7rem; font-weight: 800; display: flex; align-items: center; justify-content: center; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--txt); transition: all .3s; }
+    .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+    /* HERO */
+    .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; position: relative; z-index: 1; padding: 100px 24px 60px; }
+    .hero::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(0,255,136,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,136,.04) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%); pointer-events: none; }
+    .hero::after { content: ''; position: absolute; inset: 80px 40px 40px; border: 1px solid rgba(0,255,136,.08); pointer-events: none; }
+    .hero-inner { position: relative; max-width: 820px; }
+    .hero-eyebrow { font-family: var(--font-display); font-size: .78rem; letter-spacing: .3em; font-weight: 600; color: var(--g); text-transform: uppercase; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; animation: heroIn .8s ease .1s both; }
+    .hero-eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--g); animation: blink 1.2s infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
+    .hero h1 { font-family: var(--font-display); font-size: clamp(2.8rem, 8vw, 6rem); font-weight: 700; line-height: 1.0; margin-bottom: 24px; animation: heroIn .9s ease .25s both; }
+    .hero h1 .line2 { display: block; }
+    .hero-desc { font-size: 1.05rem; color: var(--muted); line-height: 1.75; max-width: 540px; margin: 0 auto 36px; animation: heroIn .9s ease .4s both; }
+    .hero-ctas { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; animation: heroIn .9s ease .55s both; }
+    .hero-stats { display: flex; gap: 40px; justify-content: center; flex-wrap: wrap; margin-top: 64px; padding-top: 40px; border-top: 1px solid rgba(0,255,136,.1); animation: heroIn .9s ease .7s both; }
+    .stat { text-align: center; }
+    .stat-val { font-family: var(--font-display); font-size: 2rem; font-weight: 700; background: linear-gradient(120deg, var(--g), var(--b)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .stat-lbl { font-size: .78rem; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; margin-top: 4px; }
+    @keyframes heroIn { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:none} }
+
+    /* TICKER */
+    .ticker-wrap { position: relative; z-index: 1; background: linear-gradient(120deg, var(--g), var(--b)); overflow: hidden; padding: 10px 0; }
+    .ticker-track { display: flex; width: max-content; animation: tickerScroll 28s linear infinite; }
+    .ticker-item { font-family: var(--font-display); font-size: .85rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #070B0F; white-space: nowrap; padding: 0 32px; }
+    @keyframes tickerScroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+    /* BENEFITS */
+    .benefits { padding: 100px 0; position: relative; z-index: 1; }
+    .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+    .benefit-card { background: var(--glass); backdrop-filter: blur(12px); border: 1px solid rgba(0,255,136,.1); border-radius: 4px; padding: 2rem 1.75rem; position: relative; overflow: hidden; transition: border-color .3s, transform .3s; }
+    .benefit-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--g), var(--b)); transform: scaleX(0); transform-origin: left; transition: transform .4s; }
+    .benefit-card:hover { border-color: rgba(0,255,136,.3); transform: translateY(-6px); }
+    .benefit-card:hover::before { transform: scaleX(1); }
+    .benefit-icon { font-size: 2.4rem; margin-bottom: 16px; display: block; filter: drop-shadow(0 0 10px rgba(0,255,136,.5)); }
+    .benefit-card h3 { font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; letter-spacing: .05em; margin-bottom: 10px; color: var(--g); }
+    .benefit-card p { color: var(--muted); font-size: .9rem; line-height: 1.65; }
+
+    /* PRODUCTS */
+    .products { padding: 100px 0; background: var(--bg1); position: relative; z-index: 1; }
+    .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 22px; }
+    .product-card { background: var(--bg2); border: 1px solid rgba(0,255,136,.1); border-radius: 4px; overflow: hidden; position: relative; transition: all .3s; display: flex; flex-direction: column; }
+    .product-card:hover { border-color: rgba(0,255,136,.35); transform: translateY(-8px); box-shadow: 0 20px 50px rgba(0,0,0,.5), var(--glow-g); }
+    .product-badge { position: absolute; top: 14px; right: 14px; z-index: 5; font-family: var(--font-display); font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; padding: 4px 12px; border-radius: 2px; background: var(--g); color: #070B0F; }
+    .product-badge.red { background: var(--red); color: white; }
+    .product-visual { height: 220px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; background: var(--bg3); }
+    .product-visual-bg { position: absolute; inset: 0; background: radial-gradient(circle at 50% 60%, var(--v-color, rgba(0,255,136,.12)) 0%, transparent 65%); }
+    .product-visual-hex { width: 120px; height: 120px; background: linear-gradient(135deg, rgba(0,255,136,.12), rgba(0,212,255,.08)); clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); display: flex; align-items: center; justify-content: center; font-size: 3.5rem; position: relative; z-index: 2; border: 1px solid rgba(0,255,136,.2); transition: transform .4s; }
+    .product-card:hover .product-visual-hex { transform: rotate(30deg) scale(1.1); }
+    .product-body { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+    .product-body h3 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; letter-spacing: .06em; margin-bottom: 6px; }
+    .product-flavor { color: var(--g); font-size: .8rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 10px; }
+    .product-desc { color: var(--muted); font-size: .87rem; line-height: 1.6; flex: 1; margin-bottom: 18px; }
+    .product-footer { display: flex; align-items: center; justify-content: space-between; }
+    .product-price { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--g); }
+    .product-price-old { font-size: .8rem; color: var(--muted); text-decoration: line-through; font-family: var(--font-body); font-weight: 400; }
+    .btn-add { background: transparent; border: 1px solid rgba(0,255,136,.35); color: var(--txt); padding: 9px 20px; border-radius: 3px; font-family: var(--font-display); font-size: .85rem; font-weight: 700; letter-spacing: .06em; cursor: pointer; transition: all .2s; display: flex; align-items: center; gap: 6px; }
+    .btn-add:hover { background: rgba(0,255,136,.1); border-color: var(--g); color: var(--g); transform: scale(1.04); }
+    .stock-bar { margin-top: 14px; }
+    .stock-label { font-size: .72rem; color: var(--muted); margin-bottom: 5px; display: flex; justify-content: space-between; }
+    .stock-label span { color: var(--red); font-weight: 600; }
+    .stock-track { height: 3px; background: rgba(255,255,255,.08); border-radius: 2px; }
+    .stock-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--g), var(--b)); }
+
+    /* QUIZ */
+    .quiz { padding: 100px 0; background: var(--bg0); position: relative; z-index: 1; overflow: hidden; }
+    .quiz::before { content: ''; position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(0,255,136,.07) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%,-50%); pointer-events: none; }
+    .quiz-box { max-width: 820px; margin: 0 auto; background: var(--glass); backdrop-filter: blur(16px); border: 1px solid rgba(0,255,136,.2); border-radius: 6px; padding: 48px; position: relative; }
+    .quiz-box::before,.quiz-box::after { content: ''; position: absolute; width: 18px; height: 18px; border-color: var(--g); border-style: solid; }
+    .quiz-box::before { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+    .quiz-box::after { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+    .quiz-steps { display: flex; gap: 8px; margin-bottom: 36px; align-items: center; }
+    .q-step { flex: 1; height: 3px; border-radius: 2px; background: rgba(255,255,255,.08); transition: background .4s; }
+    .q-step.done { background: linear-gradient(90deg, var(--g), var(--b)); }
+    .q-step.active { background: var(--g); animation: qPulse 1s infinite; }
+    @keyframes qPulse { 0%,100%{opacity:1} 50%{opacity:.55} }
+    .q-counter { font-family: var(--font-display); font-size: .8rem; color: var(--muted); letter-spacing: .1em; text-align: right; margin-bottom: 10px; }
+    .q-counter em { color: var(--g); font-style: normal; font-weight: 700; }
+    .quiz-question { display: none; }
+    .quiz-question.active { display: block; animation: slideQ .4s ease; }
+    @keyframes slideQ { from{opacity:0;transform:translateX(16px)} to{opacity:1;transform:none} }
+    .quiz-question h3 { font-family: var(--font-display); font-size: 1.55rem; font-weight: 700; margin-bottom: 28px; line-height: 1.3; }
+    .quiz-opts { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 28px; }
+    .quiz-opt { background: var(--bg2); border: 1px solid rgba(0,255,136,.12); border-radius: 4px; padding: 20px 16px; text-align: center; cursor: pointer; transition: all .25s; }
+    .quiz-opt:hover { border-color: rgba(0,255,136,.4); transform: translateY(-4px); background: var(--bg3); }
+    .quiz-opt.sel { border-color: var(--g); background: rgba(0,255,136,.07); box-shadow: var(--glow-g); }
+    .quiz-opt-icon { font-size: 2rem; margin-bottom: 10px; display: block; }
+    .quiz-opt h4 { font-family: var(--font-display); font-size: 1rem; font-weight: 700; color: var(--g); margin-bottom: 6px; }
+    .quiz-opt p { font-size: .8rem; color: var(--muted); line-height: 1.5; }
+    .quiz-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
+    .quiz-nav-btn { background: none; border: 1px solid rgba(0,255,136,.3); color: var(--txt); padding: 10px 24px; font-family: var(--font-display); font-size: .9rem; font-weight: 700; letter-spacing: .06em; cursor: pointer; border-radius: 3px; transition: all .2s; }
+    .quiz-nav-btn:hover:not(:disabled) { border-color: var(--g); color: var(--g); }
+    .quiz-nav-btn:disabled { opacity: .3; cursor: not-allowed; }
+    .quiz-result { display: none; }
+    .quiz-result.active { display: block; animation: slideQ .5s ease; }
+    .result-product-card { background: var(--bg2); border: 1px solid rgba(0,255,136,.25); border-radius: 4px; padding: 28px; margin-bottom: 24px; text-align: center; }
+    .result-product-card h4 { font-family: var(--font-display); font-size: 1.9rem; font-weight: 700; margin-bottom: 12px; }
+    .result-product-card p { color: var(--muted); line-height: 1.7; margin-bottom: 20px; }
+    .discount-display { display: inline-block; font-family: var(--font-display); font-size: 2rem; font-weight: 700; letter-spacing: .25em; color: var(--g); border: 2px dashed rgba(0,255,136,.4); padding: 12px 28px; border-radius: 4px; background: rgba(0,255,136,.05); margin-bottom: 12px; }
+    .timer-bar { display: flex; align-items: center; gap: 10px; justify-content: center; margin-bottom: 24px; font-family: var(--font-display); font-size: .85rem; color: var(--muted); }
+    .timer-val { color: var(--red); font-weight: 700; font-size: 1.1rem; }
+    .email-form { margin-top: 8px; }
+    .email-form input[type="email"] { width: 100%; padding: 14px 18px; background: var(--bg0); border: 1px solid rgba(0,255,136,.2); border-radius: 3px; color: var(--txt); font-size: .95rem; font-family: var(--font-body); margin-bottom: 12px; transition: border-color .2s; }
+    .email-form input[type="email"]:focus { outline: none; border-color: var(--g); }
+    .email-form input[type="email"]::placeholder { color: var(--muted); }
+    .check-row { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: .85rem; margin-bottom: 18px; cursor: pointer; }
+    .check-row input { accent-color: var(--g); width: 16px; height: 16px; }
+
+    /* SCIENCE */
+    .science { padding: 100px 0; background: var(--bg1); position: relative; z-index: 1; }
+    .science-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+    .science-card { background: var(--bg2); border: 1px solid rgba(0,212,255,.1); border-radius: 4px; padding: 28px 22px; transition: all .3s; position: relative; overflow: hidden; }
+    .science-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--b), var(--g)); transform: scaleX(0); transform-origin: left; transition: transform .4s; }
+    .science-card:hover { border-color: rgba(0,212,255,.3); transform: translateY(-5px); }
+    .science-card:hover::after { transform: scaleX(1); }
+    .sci-icon { width: 52px; height: 52px; border-radius: 50%; background: rgba(0,212,255,.08); border: 1px solid rgba(0,212,255,.2); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 16px; }
+    .science-card h3 { font-family: var(--font-display); font-size: 1rem; font-weight: 700; color: var(--b); letter-spacing: .05em; margin-bottom: 10px; }
+    .science-card p { color: var(--muted); font-size: .85rem; line-height: 1.65; }
+
+    /* TESTIMONIALS */
+    .testimonials { padding: 100px 0; position: relative; z-index: 1; }
+    .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+    .testi-card { background: var(--bg2); border: 1px solid rgba(0,255,136,.08); border-radius: 4px; padding: 24px; transition: border-color .3s; }
+    .testi-card:hover { border-color: rgba(0,255,136,.25); }
+    .testi-stars { color: var(--g); font-size: 1.1rem; margin-bottom: 14px; letter-spacing: 2px; }
+    .testi-text { color: var(--muted); font-size: .9rem; line-height: 1.7; margin-bottom: 20px; font-style: italic; }
+    .testi-text::before { content: '"'; color: var(--g); font-size: 1.5rem; line-height: 0; vertical-align: -6px; margin-right: 4px; }
+    .testi-author { display: flex; align-items: center; gap: 12px; }
+    .testi-avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--g), var(--b)); display: flex; align-items: center; justify-content: center; font-weight: 800; color: #070B0F; font-size: 1rem; font-family: var(--font-display); flex-shrink: 0; }
+    .testi-name { font-family: var(--font-display); font-weight: 700; font-size: .95rem; }
+    .testi-handle { font-size: .78rem; color: var(--g); }
+    .testi-game { font-size: .75rem; color: var(--muted); margin-top: 2px; }
+
+    /* STICKY CTA */
+    .sticky-cta { display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 900; background: rgba(7,11,15,.95); backdrop-filter: blur(10px); border-top: 1px solid rgba(0,255,136,.2); padding: 12px 20px; }
+    .sticky-cta .btn { width: 100%; justify-content: center; }
+
+    /* FOOTER */
+    footer { background: var(--bg1); border-top: 1px solid rgba(0,255,136,.1); padding: 64px 0 32px; position: relative; z-index: 1; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.3fr; gap: 40px; margin-bottom: 48px; }
+    .footer-brand p { color: var(--muted); font-size: .88rem; line-height: 1.7; margin: 16px 0 20px; max-width: 280px; }
+    .socials { display: flex; gap: 10px; }
+    .socials a { width: 38px; height: 38px; border-radius: 3px; border: 1px solid rgba(0,255,136,.15); display: flex; align-items: center; justify-content: center; font-size: 1rem; transition: all .2s; text-decoration: none; }
+    .socials a:hover { border-color: var(--g); background: rgba(0,255,136,.08); transform: translateY(-3px); }
+    .footer-col h5 { font-family: var(--font-display); font-size: .85rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--g); margin-bottom: 18px; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul a { color: var(--muted); font-size: .87rem; text-decoration: none; transition: color .2s; }
+    .footer-col ul a:hover { color: var(--g); }
+    .footer-contact li { display: flex; gap: 10px; align-items: flex-start; color: var(--muted); font-size: .87rem; margin-bottom: 10px; }
+    .footer-contact li span { color: var(--g); flex-shrink: 0; }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 28px; border-top: 1px solid rgba(0,255,136,.08); font-size: .78rem; color: var(--muted); }
+    .footer-bottom strong { color: var(--g); }
+
+    /* CART MODAL */
+    .overlay { display: none; position: fixed; inset: 0; z-index: 2000; background: rgba(0,0,0,.75); backdrop-filter: blur(4px); }
+    .overlay.open { display: flex; align-items: center; justify-content: center; }
+    .cart-modal { background: var(--bg2); border: 1px solid rgba(0,255,136,.25); border-radius: 6px; padding: 32px; width: 90%; max-width: 480px; max-height: 80vh; overflow-y: auto; }
+    .modal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+    .modal-head h2 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; }
+    .modal-close { background: none; border: none; color: var(--muted); font-size: 1.6rem; cursor: pointer; transition: color .2s; line-height: 1; }
+    .modal-close:hover { color: var(--red); }
+    .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid rgba(0,255,136,.08); }
+    .cart-item-left { display: flex; align-items: center; gap: 14px; }
+    .cart-item-icon { font-size: 1.6rem; }
+    .cart-item-name { font-family: var(--font-display); font-size: 1rem; font-weight: 600; }
+    .cart-item-qty { font-size: .8rem; color: var(--muted); margin-top: 2px; }
+    .cart-item-controls { display: flex; align-items: center; gap: 8px; }
+    .qty-btn { width: 26px; height: 26px; border-radius: 3px; background: var(--bg3); border: 1px solid rgba(0,255,136,.2); color: var(--txt); font-size: 1rem; cursor: pointer; transition: all .2s; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; }
+    .qty-btn:hover { border-color: var(--g); color: var(--g); }
+    .qty-num { font-family: var(--font-display); font-weight: 700; min-width: 20px; text-align: center; }
+    .cart-item-price { font-family: var(--font-display); color: var(--g); font-size: 1rem; font-weight: 700; }
+    .cart-total-row { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; font-family: var(--font-display); }
+    .cart-total-row .label { font-size: 1rem; color: var(--muted); }
+    .cart-total-row .val { font-size: 1.6rem; font-weight: 700; color: var(--g); }
+    .cart-empty { text-align: center; padding: 40px 0; color: var(--muted); }
+    .cart-empty .ico { font-size: 3rem; margin-bottom: 16px; }
+
+    /* TOASTS */
+    .toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
+    .toast { background: var(--bg2); border: 1px solid rgba(0,255,136,.3); border-left: 3px solid var(--g); padding: 14px 20px; border-radius: 4px; font-family: var(--font-display); font-size: .95rem; font-weight: 600; backdrop-filter: blur(8px); pointer-events: all; animation: toastIn .3s ease; min-width: 240px; }
+    .toast.error { border-left-color: var(--red); }
+    @keyframes toastIn { from{opacity:0;transform:translateX(30px)} to{opacity:1;transform:none} }
+    @keyframes toastOut { to{opacity:0;transform:translateX(30px)} }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .mobile-menu { display: none; position: fixed; top: 68px; inset-inline: 0; background: rgba(7,11,15,.97); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(0,255,136,.15); padding: 24px; z-index: 999; flex-direction: column; gap: 20px; }
+      .mobile-menu.open { display: flex; }
+      .mobile-menu a { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color .2s; }
+      .mobile-menu a:hover { color: var(--g); }
+      .hero h1 { font-size: clamp(2.2rem, 10vw, 3.2rem); }
+      .quiz-box { padding: 28px 20px; }
+      .quiz-opts { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+      .science-grid { grid-template-columns: 1fr 1fr; }
+      .sticky-cta { display: block; }
+      body { padding-bottom: 70px; }
+      #cursor, #cursor-ring { display: none; }
+      body { cursor: auto; }
+      .btn, .quiz-opt, .cart-btn, .btn-add, .quiz-nav-btn, .modal-close, .qty-btn { cursor: pointer; }
+    }
+    @media (max-width: 480px) {
+      .quiz-opts { grid-template-columns: 1fr; }
+      .science-grid { grid-template-columns: 1fr; }
+      .hero-stats { gap: 24px; }
+    }
+  </style>
 </head>
 <body>
-    <!-- HEADER -->
-    <header>
-        <div class="nav-container">
-            <div class="logo">
-                <div class="logo-icon">⚡</div>
-                <div class="logo-text">FOCUS<span>FUEL</span></div>
-            </div>
-            
-            <ul class="nav-menu" id="navMenu">
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#productos">Productos</a></li>
-                <li><a href="#ciencia">Nuestra Ciencia</a></li>
-                <li><a href="#quiz">Quiz</a></li>
-                <li><a href="#comunidad">Comunidad</a></li>
-            </ul>
 
-            <div style="display: flex; gap: 1rem; align-items: center;">
-                <div class="cart-icon" onclick="toggleCart()">
-                    🛒
-                    <span class="cart-count" id="cartCount">0</span>
-                </div>
-                <div class="hamburger" id="hamburger" onclick="toggleMenu()">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            </div>
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+<canvas id="canvas"></canvas>
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- HEADER -->
+<header id="header">
+  <nav class="nav">
+    <a class="logo" href="#">
+      <div class="logo-mark">⚡</div>
+      FOCUS<em>FUEL</em>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#inicio">Inicio</a></li>
+      <li><a href="#productos">Productos</a></li>
+      <li><a href="#ciencia">Ciencia</a></li>
+      <li><a href="#quiz">Quiz</a></li>
+      <li><a href="#comunidad">Comunidad</a></li>
+      <li><a href="#faq">FAQ & Trivia</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="cart-btn" onclick="toggleCart()">🛒 Carrito <span class="cart-badge" id="cartBadge">0</span></button>
+      <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="Menú">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<nav class="mobile-menu" id="mobileMenu">
+  <a href="#inicio" onclick="closeMobileMenu()">Inicio</a>
+  <a href="#productos" onclick="closeMobileMenu()">Productos</a>
+  <a href="#ciencia" onclick="closeMobileMenu()">Ciencia</a>
+  <a href="#quiz" onclick="closeMobileMenu()">Quiz</a>
+  <a href="#comunidad" onclick="closeMobileMenu()">Comunidad</a>
+  <a href="#faq" onclick="closeMobileMenu()">FAQ & Trivia</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-inner">
+    <div class="hero-eyebrow"><span class="dot"></span>Hecho en Costa Rica · Para Gamers Serios<span class="dot"></span></div>
+    <h1>TU <span class="grad-text">COMBUSTIBLE</span><span class="line2">PARA EL <span class="grad-text">NEXT LEVEL</span></span></h1>
+    <p class="hero-desc">Snacks funcionales con ingredientes ticos. Energía sostenida, enfoque láser y protección visual para sessions sin límite.</p>
+    <div class="hero-ctas">
+      <a href="#quiz" class="btn btn-primary">Descubrí tu snack ideal →</a>
+      <a href="#productos" class="btn btn-ghost">Ver productos</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-val">2,400+</div><div class="stat-lbl">Gamers activos</div></div>
+      <div class="stat"><div class="stat-val">75%</div><div class="stat-lbl">Ingredientes ticos</div></div>
+      <div class="stat"><div class="stat-val">4.9★</div><div class="stat-lbl">Rating promedio</div></div>
+      <div class="stat"><div class="stat-val">0</div><div class="stat-lbl">Bajones de energía</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <span class="ticker-item">Nitro Bar ⚡</span><span class="ticker-item">·</span>
+    <span class="ticker-item">Vision Mix 👁️</span><span class="ticker-item">·</span>
+    <span class="ticker-item">React Gummies 🎯</span><span class="ticker-item">·</span>
+    <span class="ticker-item">Café de Tarrazú 🇨🇷</span><span class="ticker-item">·</span>
+    <span class="ticker-item">Energía Sostenida 🧠</span><span class="ticker-item">·</span>
+    <span class="ticker-item">Sin Bajón ✓</span><span class="ticker-item">·</span>
+    <span class="ticker-item">Nitro Bar ⚡</span><span class="ticker-item">·</span>
+    <span class="ticker-item">Vision Mix 👁️</span><span class="ticker-item">·</span>
+    <span class="ticker-item">React Gummies 🎯</span><span class="ticker-item">·</span>
+    <span class="ticker-item">Café de Tarrazú 🇨🇷</span><span class="ticker-item">·</span>
+    <span class="ticker-item">Energía Sostenida 🧠</span><span class="ticker-item">·</span>
+    <span class="ticker-item">Sin Bajón ✓</span><span class="ticker-item">·</span>
+  </div>
+</div>
+
+<!-- BENEFITS -->
+<section class="benefits" id="benefits">
+  <div class="container">
+    <div class="s-label reveal">Por qué Focus Fuel</div>
+    <h2 class="s-title reveal">DISEÑADO PARA <span class="grad-text">GANAR</span></h2>
+    <p class="s-sub reveal">No es solo un snack. Es tu upgrade cognitivo formulado por expertos para la comunidad gamer tica.</p>
+    <div class="benefits-grid">
+      <div class="benefit-card reveal"><span class="benefit-icon">🇨🇷</span><h3>100% COSTARRICENSE</h3><p>75% de ingredientes de productores locales. Café de Tarrazú, miel de Puriscal, cacao de la Zona Sur. Apoyamos la economía tica.</p></div>
+      <div class="benefit-card reveal" style="transition-delay:.1s"><span class="benefit-icon">🧠</span><h3>CIENCIA NUTRICIONAL</h3><p>Formulado por nutricionistas deportivos especializados en rendimiento cognitivo. Cada ingrediente tiene un propósito.</p></div>
+      <div class="benefit-card reveal" style="transition-delay:.2s"><span class="benefit-icon">🎮</span><h3>ANTI-MIGAJAS</h3><p>Diseño pensado para gamers: sin polvo, sin líquidos, sin riesgo para tu teclado. Jugá sin interrupciones.</p></div>
+      <div class="benefit-card reveal" style="transition-delay:.3s"><span class="benefit-icon">⚡</span><h3>SABORES TICOS</h3><p>Guanábana, Pejibaye, Mango-Cas, Maracuyá. Sabores que conocés y amás, ahora con superpoderes funcionales.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="products" id="productos">
+  <div class="container">
+    <div class="s-label reveal">Nuestros Productos</div>
+    <h2 class="s-title reveal">ELEGÍ TU <span class="grad-text">BUILD PERFECTA</span></h2>
+    <p class="s-sub reveal">Cada snack resuelve un problema real de los gamers. ¿Cuál es el tuyo?</p>
+    <div class="products-grid">
+      <div class="product-card reveal">
+        <div class="product-badge">Más Vendido</div>
+        <div class="product-visual"><div class="product-visual-bg" style="--v-color: rgba(0,255,136,.18)"></div><div class="product-visual-hex">⚡</div></div>
+        <div class="product-body">
+          <h3>NITRO BAR</h3>
+          <div class="product-flavor">Café Tarrazú · Guanábana · Pejibaye</div>
+          <p class="product-desc">Energía sostenida con cafeína natural de café tico + L-Teanina. Enfoque láser por 4–6 horas sin el crash del azúcar.</p>
+          <div class="product-footer"><div><div class="product-price">₡2,200</div><div style="font-size:.75rem;color:var(--muted)">IVA incluido</div></div><button class="btn-add" onclick="addToCart('Nitro Bar','⚡',2200)">+ Agregar</button></div>
+          <div class="stock-bar"><div class="stock-label">Stock <span>¡Últimas 14 unidades!</span></div><div class="stock-track"><div class="stock-fill" style="width:18%"></div></div></div>
         </div>
-    </header>
-
-    <!-- HERO SECTION -->
-    <section class="hero" id="inicio">
-        <div class="hero-content">
-            <h1>TU <span>COMBUSTIBLE</span><br>PARA EL NEXT LEVEL</h1>
-            <p>Snacks funcionales hechos en Costa Rica para gamers que exigen lo mejor. Energía sostenida, enfoque láser y cuidado visual.</p>
-            <div class="hero-buttons">
-                <a href="#quiz" class="btn btn-primary">Descubre tu snack ideal →</a>
-                <a href="#productos" class="btn btn-secondary">Ver productos</a>
-            </div>
+      </div>
+      <div class="product-card reveal" style="transition-delay:.1s">
+        <div class="product-visual"><div class="product-visual-bg" style="--v-color: rgba(0,212,255,.18)"></div><div class="product-visual-hex">👁️</div></div>
+        <div class="product-body">
+          <h3>VISION MIX</h3>
+          <div class="product-flavor">Arándanos · Nueces · Chocolate 85%</div>
+          <p class="product-desc">Protección contra luz azul con antocianinas y omega-7. Ideal para maratones nocturnas cuando los ojos reclaman piedad.</p>
+          <div class="product-footer"><div><div class="product-price">₡2,800</div><div style="font-size:.75rem;color:var(--muted)">IVA incluido</div></div><button class="btn-add" onclick="addToCart('Vision Mix','👁️',2800)">+ Agregar</button></div>
+          <div class="stock-bar"><div class="stock-label">Stock <span style="color:var(--muted)">28 unidades</span></div><div class="stock-track"><div class="stock-fill" style="width:45%"></div></div></div>
         </div>
-    </section>
-
-    <!-- BENEFITS SECTION -->
-    <section class="benefits">
-        <div class="container">
-            <h2 class="section-title">POR QUÉ FOCUS FUEL</h2>
-            <p class="section-subtitle">Diseñado por gamers, respaldado por la ciencia</p>
-            
-            <div class="benefits-grid">
-                <div class="benefit-card">
-                    <div class="benefit-icon">🇨🇷</div>
-                    <h3>100% COSTARRICENSE</h3>
-                    <p>75% de ingredientes de productores locales. Apoyamos la economía tica.</p>
-                </div>
-                <div class="benefit-card">
-                    <div class="benefit-icon">🧠</div>
-                    <h3>CIENCIA NUTRICIONAL</h3>
-                    <p>Formulado por expertos para mejorar rendimiento cognitivo y reflejos.</p>
-                </div>
-                <div class="benefit-card">
-                    <div class="benefit-icon">🎮</div>
-                    <h3>DISEÑADO PARA GAMERS</h3>
-                    <p>Sin migajas, energía sostenida, protección contra luz azul.</p>
-                </div>
-                <div class="benefit-card">
-                    <div class="benefit-icon">⚡</div>
-                    <h3>SABORES TICOS</h3>
-                    <p>Café de Tarrazú, Guanábana, Pejibaye... sabores que conoces.</p>
-                </div>
-            </div>
+      </div>
+      <div class="product-card reveal" style="transition-delay:.2s">
+        <div class="product-visual"><div class="product-visual-bg" style="--v-color: rgba(255,59,111,.15)"></div><div class="product-visual-hex">🎯</div></div>
+        <div class="product-body">
+          <h3>REACT GUMMIES</h3>
+          <div class="product-flavor">Mango-Cas · Maracuyá-Jengibre</div>
+          <p class="product-desc">Reflejos en milisegundos. Té verde + vitamina B12 para reacciones más rápidas sin el nerviosismo de la cafeína clásica.</p>
+          <div class="product-footer"><div><div class="product-price">₡1,800</div><div style="font-size:.75rem;color:var(--muted)">IVA incluido</div></div><button class="btn-add" onclick="addToCart('React Gummies','🎯',1800)">+ Agregar</button></div>
+          <div class="stock-bar"><div class="stock-label">Stock <span style="color:var(--muted)">52 unidades</span></div><div class="stock-track"><div class="stock-fill" style="width:72%"></div></div></div>
         </div>
-    </section>
-
-    <!-- PRODUCTS SECTION -->
-    <section class="products" id="productos">
-        <div class="container">
-            <h2 class="section-title">NUESTROS PRODUCTOS</h2>
-            <p class="section-subtitle">Elegí tu build perfecta</p>
-
-            <div class="products-grid">
-                <!-- Producto 1: Nitro Bar -->
-                <div class="product-card">
-                    <div class="product-badge">MÁS VENDIDO</div>
-                    <div class="product-image">
-                        <span>⚡</span>
-                    </div>
-                    <div class="product-info">
-                        <h3>NITRO BAR</h3>
-                        <div class="sabor">Café Tarrazú · Guanábana · Pejibaye</div>
-                        <p class="descripcion">Energía sostenida con cafeína natural + L-Teanina. Enfoque láser por horas.</p>
-                        <div class="product-footer">
-                            <span class="product-price">₡2,200 <small>IVA inc.</small></span>
-                            <button class="btn-add" onclick="addToCart('Nitro Bar', 2200)">➕ Agregar</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Producto 2: Vision Mix -->
-                <div class="product-card">
-                    <div class="product-image">
-                        <span>👁️</span>
-                    </div>
-                    <div class="product-info">
-                        <h3>VISION MIX</h3>
-                        <div class="sabor">Arándanos · Nueces · Chocolate 85%</div>
-                        <p class="descripcion">Protección contra luz azul. Antioxidantes para sesiones maratónicas.</p>
-                        <div class="product-footer">
-                            <span class="product-price">₡2,800 <small>IVA inc.</small></span>
-                            <button class="btn-add" onclick="addToCart('Vision Mix', 2800)">➕ Agregar</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Producto 3: React Gummies -->
-                <div class="product-card">
-                    <div class="product-image">
-                        <span>🎯</span>
-                    </div>
-                    <div class="product-info">
-                        <h3>REACT GUMMIES</h3>
-                        <div class="sabor">Mango-Cas · Maracuyá-Jengibre</div>
-                        <p class="descripcion">Reflejos rápidos con té verde + vitamina B12. Energía inmediata sin bajón.</p>
-                        <div class="product-footer">
-                            <span class="product-price">₡1,800 <small>IVA inc.</small></span>
-                            <button class="btn-add" onclick="addToCart('React Gummies', 1800)">➕ Agregar</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Producto 4: Starter Pack -->
-                <div class="product-card">
-                    <div class="product-badge">AHORRO 15%</div>
-                    <div class="product-image">
-                        <span>📦</span>
-                    </div>
-                    <div class="product-info">
-                        <h3>STARTER PACK</h3>
-                        <div class="sabor">1 de cada producto</div>
-                        <p class="descripcion">El combo completo para que encuentres tu favorito. ¡3 snacks en 1!</p>
-                        <div class="product-footer">
-                            <span class="product-price">₡5,900 <small>₡6,800</small></span>
-                            <button class="btn-add" onclick="addToCart('Starter Pack', 5900)">➕ Agregar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      </div>
+      <div class="product-card reveal" style="transition-delay:.3s">
+        <div class="product-badge red">Ahorro 15%</div>
+        <div class="product-visual"><div class="product-visual-bg" style="--v-color: rgba(255,200,0,.12)"></div><div class="product-visual-hex">📦</div></div>
+        <div class="product-body">
+          <h3>STARTER PACK</h3>
+          <div class="product-flavor">1 Nitro Bar + 1 Vision Mix + 1 React Gummies</div>
+          <p class="product-desc">El combo perfecto para descubrir tu favorito. Tres sesiones épicas garantizadas. El pack más inteligente para empezar.</p>
+          <div class="product-footer"><div><div class="product-price">₡5,900 <span class="product-price-old">₡6,800</span></div><div style="font-size:.75rem;color:var(--muted)">IVA incluido</div></div><button class="btn-add" onclick="addToCart('Starter Pack','📦',5900)">+ Agregar</button></div>
+          <div class="stock-bar"><div class="stock-label">Stock <span>¡Últimas 8 unidades!</span></div><div class="stock-track"><div class="stock-fill" style="width:12%"></div></div></div>
         </div>
-    </section>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- QUIZ SECTION -->
-    <section class="quiz" id="quiz">
-        <div class="container">
-            <h2 class="section-title">¿CUÁL ES TU COMBUSTIBLE IDEAL?</h2>
-            <p class="section-subtitle">Respondé 4 preguntas y descubrí tu snack perfecto + 10% de descuento</p>
-
-            <div class="quiz-container">
-                <!-- Progress Bar -->
-                <div class="quiz-progress">
-                    <div class="progress-step active" id="step1">1</div>
-                    <div class="progress-step" id="step2">2</div>
-                    <div class="progress-step" id="step3">3</div>
-                    <div class="progress-step" id="step4">4</div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
-                    </div>
-                </div>
-
-                <!-- Quiz Questions Container -->
-                <div id="quizQuestions">
-                    <!-- Pregunta 1 -->
-                    <div class="quiz-question active" id="q1">
-                        <h3>¿Cuál es tu momento favorito para jugar?</h3>
-                        <div class="quiz-options">
-                            <div class="quiz-option" onclick="selectAnswer(1, 'A')">
-                                <div class="quiz-option-icon">🌅</div>
-                                <h4>Mañana</h4>
-                                <p>Antes del trabajo o clases. Busco energía rápida.</p>
-                            </div>
-                            <div class="quiz-option" onclick="selectAnswer(1, 'B')">
-                                <div class="quiz-option-icon">☀️</div>
-                                <h4>Tarde</h4>
-                                <p>Sesiones casuales. Busco algo ligero.</p>
-                            </div>
-                            <div class="quiz-option" onclick="selectAnswer(1, 'C')">
-                                <div class="quiz-option-icon">🌙</div>
-                                <h4>Noche / Madrugada</h4>
-                                <p>Ranked y streams. Necesito energía sostenida.</p>
-                            </div>
-                            <div class="quiz-option" onclick="selectAnswer(1, 'D')">
-                                <div class="quiz-option-icon">📅</div>
-                                <h4>Fines de semana</h4>
-                                <p>Maratones gaming. Busco variedad y resistencia.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Pregunta 2 -->
-                    <div class="quiz-question" id="q2">
-                        <h3>¿Cuál es tu mayor desafío en sesiones largas?</h3>
-                        <div class="quiz-options">
-                            <div class="quiz-option" onclick="selectAnswer(2, 'A')">
-                                <div class="quiz-option-icon">😴</div>
-                                <h4>Me da sueño</h4>
-                                <p>Pierdo concentración después de 1 hora.</p>
-                            </div>
-                            <div class="quiz-option" onclick="selectAnswer(2, 'B')">
-                                <div class="quiz-option-icon">👀</div>
-                                <h4>Fatiga visual</h4>
-                                <p>Me arden los ojos, veo borroso.</p>
-                            </div>
-                            <div class="quiz-option" onclick="selectAnswer(2, 'C')">
-                                <div class="quiz-option-icon">🍔</div>
-                                <h4>Hambre</h4>
-                                <p>Como cualquier cosa y me arrepiento.</p>
-                            </div>
-                            <div class="quiz-option" onclick="selectAnswer(2, 'D')">
-                                <div class="quiz-option-icon">📉</div>
-                                <h4>Bajo rendimiento</h4>
-                                <p>Después de 2 horas juego peor.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Pregunta 3 -->
-                    <div class="quiz-question" id="q3">
-                        <h3>¿Qué tipo de juegos preferís?</h3>
-                        <div class="quiz-options">
-                            <div class="quiz-option" onclick="selectAnswer(3, 'A')">
-                                <div class="quiz-option-icon">🔫</div>
-                                <h4>Shooters competitivos</h4>
-                                <p>Valorant, CS:GO, Fortnite</p>
-                            </div>
-                            <div class="quiz-option" onclick="selectAnswer(3, 'B')">
-                                <div class="quiz-option-icon">⚔️</div>
-                                <h4>MOBA / Estrategia</h4>
-                                <p>LoL, Dota 2, Age of Empires</p>
-                            </div>
-                            <div class="quiz-option" onclick="selectAnswer(3, 'C')">
-                                <div class="quiz-option-icon">🗺️</div>
-                                <h4>RPG / Mundo abierto</h4>
-                                <p>Genshin, Zelda, Skyrim</p>
-                            </div>
-                            <div class="quiz-option" onclick="selectAnswer(3, 'D')">
-                                <div class="quiz-option-icon">⚽</div>
-                                <h4>Deportes / Carreras</h4>
-                                <p>FIFA, F1, NBA 2K</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Pregunta 4 -->
-                    <div class="quiz-question" id="q4">
-                        <h3>¿Qué buscás en un snack?</h3>
-                        <div class="quiz-options">
-                            <div class="quiz-option" onclick="selectAnswer(4, 'A')">
-                                <div class="quiz-option-icon">⚡</div>
-                                <h4>Energía inmediata</h4>
-                                <p>Sin bajón, que dure horas.</p>
-                            </div>
-                            <div class="quiz-option" onclick="selectAnswer(4, 'B')">
-                                <div class="quiz-option-icon">🖥️</div>
-                                <h4>Práctico</h4>
-                                <p>Que no ensucie el teclado.</p>
-                            </div>
-                            <div class="quiz-option" onclick="selectAnswer(4, 'C')">
-                                <div class="quiz-option-icon">👁️</div>
-                                <h4>Cuidado visual</h4>
-                                <p>Protección para mis ojos.</p>
-                            </div>
-                            <div class="quiz-option" onclick="selectAnswer(4, 'D')">
-                                <div class="quiz-option-icon">🎯</div>
-                                <h4>Todo lo anterior</h4>
-                                <p>Quiero el pack completo.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Quiz Result -->
-                <div class="quiz-result" id="quizResult">
-                    <div class="result-product" id="resultProduct">
-                        <!-- Se llena con JS -->
-                    </div>
-                    
-                    <div class="discount-code" id="discountCode">FOCUS10</div>
-                    
-                    <div class="email-capture">
-                        <input type="email" id="quizEmail" placeholder="Tu email para recibir el cupón">
-                        <div class="checkbox">
-                            <input type="checkbox" id="discordJoin" checked>
-                            <label for="discordJoin">Quiero unirme a la comunidad Discord</label>
-                        </div>
-                        <button class="btn btn-primary" onclick="captureLead()" style="width: 100%;">Obtener mi descuento</button>
-                    </div>
-                </div>
-
-                <!-- Quiz Navigation -->
-                <div class="quiz-navigation">
-                    <button class="quiz-nav-btn" id="prevBtn" onclick="prevQuestion()" disabled>← Anterior</button>
-                    <button class="quiz-nav-btn" id="nextBtn" onclick="nextQuestion()">Siguiente →</button>
-                </div>
-            </div>
+<!-- QUIZ -->
+<section class="quiz" id="quiz">
+  <div class="container">
+    <div class="s-label reveal">Recomendación Personalizada</div>
+    <h2 class="s-title reveal">¿CUÁL ES TU <span class="grad-text">COMBUSTIBLE IDEAL?</span></h2>
+    <p class="s-sub reveal">4 preguntas · 30 segundos · Resultado personalizado + 10% de descuento</p>
+    <div class="quiz-box reveal">
+      <div class="quiz-steps" id="quizSteps">
+        <div class="q-step active" id="qs1"></div>
+        <div class="q-step" id="qs2"></div>
+        <div class="q-step" id="qs3"></div>
+        <div class="q-step" id="qs4"></div>
+      </div>
+      <div class="q-counter" id="qCounter">Pregunta <em>1</em> de 4</div>
+      <div id="quizQuestionsArea">
+        <div class="quiz-question active" id="q1">
+          <h3>¿Cuándo acostumbrás jugar?</h3>
+          <div class="quiz-opts">
+            <div class="quiz-opt" onclick="selectOpt(1,'A',this)"><span class="quiz-opt-icon">🌅</span><h4>Mañana</h4><p>Antes del trabajo o clases. Energía rápida.</p></div>
+            <div class="quiz-opt" onclick="selectOpt(1,'B',this)"><span class="quiz-opt-icon">☀️</span><h4>Tarde</h4><p>Sesiones casuales. Algo ligero.</p></div>
+            <div class="quiz-opt" onclick="selectOpt(1,'C',this)"><span class="quiz-opt-icon">🌙</span><h4>Noche / Madrugada</h4><p>Ranked y streams. Energía sostenida.</p></div>
+            <div class="quiz-opt" onclick="selectOpt(1,'D',this)"><span class="quiz-opt-icon">📅</span><h4>Fines de semana</h4><p>Maratones. Variedad y resistencia.</p></div>
+          </div>
         </div>
-    </section>
-
-    <!-- SCIENCE SECTION -->
-    <section class="science" id="ciencia">
-        <div class="container">
-            <h2 class="section-title">NUESTRA CIENCIA</h2>
-            <p class="section-subtitle">Ingredientes que mejoran tu rendimiento</p>
-
-            <div class="science-grid">
-                <div class="science-card">
-                    <div class="science-icon">🧪</div>
-                    <h3>CAFEÍNA + L-TEANINA</h3>
-                    <p>Sinergia perfecta para enfoque sostenido sin nerviosismo. La L-Teanina suaviza el efecto de la cafeína.</p>
-                </div>
-                <div class="science-card">
-                    <div class="science-icon">🫐</div>
-                    <h3>ANTOCIANINAS</h3>
-                    <p>Presentes en arándanos. Mejoran la visión nocturna y protegen contra la luz azul de las pantallas.</p>
-                </div>
-                <div class="science-card">
-                    <div class="science-icon">⚡</div>
-                    <h3>VITAMINA B12</h3>
-                    <p>Metilcobalamina de alta biodisponibilidad. Reduce la fatiga y mejora la función cognitiva.</p>
-                </div>
-                <div class="science-card">
-                    <div class="science-icon">🌰</div>
-                    <h3>OMEGA-7</h3>
-                    <p>De las nueces de macadamia. Lubricación ocular específica para horas frente a pantallas.</p>
-                </div>
-                <div class="science-card">
-                    <div class="science-icon">🍫</div>
-                    <h3>TEOBROMINA</h3>
-                    <p>Del cacao 85%. Estimulante suave que mejora el flujo sanguíneo cerebral.</p>
-                </div>
-                <div class="science-card">
-                    <div class="science-icon">🇨🇷</div>
-                    <h3>INGREDIENTES LOCALES</h3>
-                    <p>Café de Tarrazú, miel de Puriscal, cacao de la Zona Sur. Trazabilidad total.</p>
-                </div>
-            </div>
+        <div class="quiz-question" id="q2">
+          <h3>¿Tu mayor desafío en sesiones largas?</h3>
+          <div class="quiz-opts">
+            <div class="quiz-opt" onclick="selectOpt(2,'A',this)"><span class="quiz-opt-icon">😴</span><h4>Me da sueño</h4><p>Pierdo concentración después de 1 hora.</p></div>
+            <div class="quiz-opt" onclick="selectOpt(2,'B',this)"><span class="quiz-opt-icon">👀</span><h4>Fatiga visual</h4><p>Me arden los ojos, veo borroso.</p></div>
+            <div class="quiz-opt" onclick="selectOpt(2,'C',this)"><span class="quiz-opt-icon">🍔</span><h4>Hambre</h4><p>Como cualquier cosa y me arrepiento.</p></div>
+            <div class="quiz-opt" onclick="selectOpt(2,'D',this)"><span class="quiz-opt-icon">📉</span><h4>Bajo rendimiento</h4><p>Después de 2h juego notablemente peor.</p></div>
+          </div>
         </div>
-    </section>
-
-    <!-- CART MODAL -->
-    <div class="modal" id="cartModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Tu carrito</h2>
-                <button class="modal-close" onclick="toggleCart()">&times;</button>
-            </div>
-            <div id="cartItems">
-                <!-- Se llena con JS -->
-            </div>
-            <div class="cart-total" id="cartTotal">
-                Total: <span>₡0</span>
-            </div>
-            <button class="btn btn-primary" onclick="checkout()" style="width: 100%;">Finalizar compra</button>
+        <div class="quiz-question" id="q3">
+          <h3>¿Qué juegos preferís?</h3>
+          <div class="quiz-opts">
+            <div class="quiz-opt" onclick="selectOpt(3,'A',this)"><span class="quiz-opt-icon">🔫</span><h4>Shooters</h4><p>Valorant, CS2, Fortnite</p></div>
+            <div class="quiz-opt" onclick="selectOpt(3,'B',this)"><span class="quiz-opt-icon">⚔️</span><h4>MOBA / RTS</h4><p>LoL, Dota 2, Age of Empires</p></div>
+            <div class="quiz-opt" onclick="selectOpt(3,'C',this)"><span class="quiz-opt-icon">🗺️</span><h4>RPG / Open World</h4><p>Genshin, Elden Ring, Zelda</p></div>
+            <div class="quiz-opt" onclick="selectOpt(3,'D',this)"><span class="quiz-opt-icon">⚽</span><h4>Deportes / Carreras</h4><p>FIFA, F1, NBA 2K</p></div>
+          </div>
         </div>
+        <div class="quiz-question" id="q4">
+          <h3>¿Qué buscás en un snack gamer?</h3>
+          <div class="quiz-opts">
+            <div class="quiz-opt" onclick="selectOpt(4,'A',this)"><span class="quiz-opt-icon">⚡</span><h4>Energía rápida</h4><p>Sin bajón, que dure horas.</p></div>
+            <div class="quiz-opt" onclick="selectOpt(4,'B',this)"><span class="quiz-opt-icon">🖥️</span><h4>Practicidad</h4><p>Que no ensucie el setup.</p></div>
+            <div class="quiz-opt" onclick="selectOpt(4,'C',this)"><span class="quiz-opt-icon">👁️</span><h4>Cuidado visual</h4><p>Protección para mis ojos.</p></div>
+            <div class="quiz-opt" onclick="selectOpt(4,'D',this)"><span class="quiz-opt-icon">🎯</span><h4>Todo lo anterior</h4><p>El pack completo.</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="quiz-result" id="quizResult">
+        <div class="result-product-card">
+          <div id="resultContent"></div>
+          <div class="discount-display">FOCUS10</div>
+          <div class="timer-bar">⏱ Tu descuento expira en: <span class="timer-val" id="timerVal">15:00</span></div>
+        </div>
+        <div class="email-form">
+          <input type="email" id="quizEmail" placeholder="tu@email.com — recibí el cupón aquí" />
+          <label class="check-row"><input type="checkbox" id="discordCheck" checked /> Quiero unirme al Discord de la comunidad Focus Fuel 🎮</label>
+          <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="captureLead()">Obtener mi descuento →</button>
+        </div>
+      </div>
+      <div class="quiz-nav" id="quizNav">
+        <button class="quiz-nav-btn" id="prevBtn" onclick="prevQ()" disabled>← Anterior</button>
+        <button class="quiz-nav-btn" id="nextBtn" onclick="nextQ()">Siguiente →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCIENCE -->
+<section class="science" id="ciencia">
+  <div class="container">
+    <div class="s-label reveal">Respaldado por la Ciencia</div>
+    <h2 class="s-title reveal">INGREDIENTES QUE <span class="grad-text">FUNCIONAN</span></h2>
+    <p class="s-sub reveal">No hacemos promesas vacías. Cada ingrediente tiene evidencia científica detrás.</p>
+    <div class="science-grid">
+      <div class="science-card reveal"><div class="sci-icon">🧪</div><h3>CAFEÍNA + L-TEANINA</h3><p>Sinergia comprobada para enfoque sostenido sin el nerviosismo. La L-Teanina suaviza el pico y elimina el crash.</p></div>
+      <div class="science-card reveal" style="transition-delay:.08s"><div class="sci-icon">🫐</div><h3>ANTOCIANINAS</h3><p>De los arándanos. Mejoran visión nocturna y protegen la retina de la luz azul acumulada en pantallas.</p></div>
+      <div class="science-card reveal" style="transition-delay:.16s"><div class="sci-icon">⚡</div><h3>VITAMINA B12</h3><p>Metilcobalamina de alta biodisponibilidad. Reduce la fatiga mental y potencia la función cognitiva sostenida.</p></div>
+      <div class="science-card reveal" style="transition-delay:.24s"><div class="sci-icon">🌰</div><h3>OMEGA-7</h3><p>De nueces de macadamia. Lubricación ocular específica para horas frente a pantallas. Adiós ojos secos.</p></div>
+      <div class="science-card reveal" style="transition-delay:.32s"><div class="sci-icon">🍫</div><h3>TEOBROMINA</h3><p>Del cacao 85% de la Zona Sur. Estimulante suave que mejora el flujo sanguíneo cerebral sin elevación cardíaca.</p></div>
+      <div class="science-card reveal" style="transition-delay:.4s"><div class="sci-icon">🇨🇷</div><h3>INGREDIENTES LOCALES</h3><p>Trazabilidad total. Café de Tarrazú, miel de Puriscal, cacao de Coto. Sabés exactamente de dónde viene tu snack.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="comunidad">
+  <div class="container">
+    <div class="s-label reveal">Comunidad</div>
+    <h2 class="s-title reveal">LO QUE DICEN LOS <span class="grad-text">GAMERS</span></h2>
+    <p class="s-sub reveal">Más de 2,400 gamers costarricenses ya hicieron el upgrade.</p>
+    <div class="testi-grid">
+      <div class="testi-card reveal">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">Las React Gummies cambiaron mi juego en serio. Mi tiempo de reacción en Valorant bajó casi 20ms en una semana. No sé si es efecto placebo pero no me importa, sigo ganando.</p>
+        <div class="testi-author"><div class="testi-avatar">RC</div><div><div class="testi-name">Rodrigo C.</div><div class="testi-handle">@RC_VLR_CR</div><div class="testi-game">Valorant · Diamante 2</div></div></div>
+      </div>
+      <div class="testi-card reveal" style="transition-delay:.1s">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">Stream de 8 horas y los ojos no me ardieron hasta el final. Antes llegaba a las 3 horas y ya quería apagar todo. El Vision Mix es lo que estaba buscando.</p>
+        <div class="testi-author"><div class="testi-avatar">MT</div><div><div class="testi-name">Mariana T.</div><div class="testi-handle">@MariStream_CR</div><div class="testi-game">Variety Streamer · Twitch</div></div></div>
+      </div>
+      <div class="testi-card reveal" style="transition-delay:.2s">
+        <div class="testi-stars">★★★★☆</div>
+        <p class="testi-text">Me encanta que sea costarricense. El sabor a café de Tarrazú en la Nitro Bar es brutal. La energía dura sin el temblor de los energizantes de lata. El precio es justo.</p>
+        <div class="testi-author"><div class="testi-avatar">AS</div><div><div class="testi-name">Andrés S.</div><div class="testi-handle">@SierraMOBA</div><div class="testi-game">League of Legends · Platino</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ + KAHOOT SECTION -->
+<section class="faq-section" id="faq">
+  <div class="container">
+    <div class="s-label reveal">Preguntas Frecuentes</div>
+    <h2 class="s-title reveal">¿TENÉS <span class="grad-text">DUDAS?</span></h2>
+    <p class="s-sub reveal">Todo lo que necesitás saber sobre Focus Fuel.</p>
+
+    <div class="faq-list reveal">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>¿Los productos tienen aditivos artificiales?</span>
+          <span class="faq-arrow">›</span>
+        </button>
+        <div class="faq-a">No. Todos nuestros ingredientes son naturales y de origen trazable. Sin colorantes artificiales, sin conservantes sintéticos. Lo que ves en el empaque es exactamente lo que comés.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>¿Dónde puedo comprar Focus Fuel en Costa Rica?</span>
+          <span class="faq-arrow">›</span>
+        </button>
+        <div class="faq-a">Por ahora vendemos directamente a través de este sitio web con entrega en toda la GAM. Próximamente en tiendas seleccionadas en San José, Cartago, Heredia y Alajuela.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>¿Puedo consumir Focus Fuel si soy menor de edad?</span>
+          <span class="faq-arrow">›</span>
+        </button>
+        <div class="faq-a">Los productos con cafeína (Nitro Bar, React Gummies) están recomendados para mayores de 16 años. El Vision Mix no contiene cafeína y es apto para toda la familia. Consultá con tu médico si tenés dudas.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>¿Cuánto tiempo tarda el envío?</span>
+          <span class="faq-arrow">›</span>
+        </button>
+        <div class="faq-a">Dentro de la GAM: 24–48 horas hábiles. Zonas fuera de la GAM: 3–5 días hábiles. Todos los pedidos incluyen número de seguimiento por WhatsApp.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>¿Qué diferencia a Focus Fuel de un energizante normal?</span>
+          <span class="faq-arrow">›</span>
+        </button>
+        <div class="faq-a">Los energizantes comunes te dan un pico de azúcar seguido de un bajón brutal. Focus Fuel usa cafeína natural + L-Teanina para una curva de energía sostenida, sin crash. Además, está diseñado específicamente para no ensuciar tu setup.</div>
+      </div>
     </div>
 
-    <!-- FOOTER -->
-    <footer id="comunidad">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>FOCUS FUEL CR</h4>
-                    <p>Snacks funcionales hechos en Costa Rica para la comunidad gamer. Energía sostenida, enfoque láser y orgullo tico.</p>
-                    <div class="social-links">
-                        <a href="#">📱</a>
-                        <a href="#">📘</a>
-                        <a href="#">🎮</a>
-                        <a href="#">📸</a>
-                        <a href="#">💬</a>
-                    </div>
-                </div>
-                <div class="footer-section">
-                    <h4>Enlaces rápidos</h4>
-                    <ul>
-                        <li><a href="#inicio">Inicio</a></li>
-                        <li><a href="#productos">Productos</a></li>
-                        <li><a href="#ciencia">Nuestra ciencia</a></li>
-                        <li><a href="#quiz">Quiz</a></li>
-                        <li><a href="#">Blog</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Comunidad</h4>
-                    <ul>
-                        <li><a href="#">Discord</a></li>
-                        <li><a href="#">Torneos</a></li>
-                        <li><a href="#">Streamers</a></li>
-                        <li><a href="#">Afiliados</a></li>
-                        <li><a href="#">Embajadores</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Contacto</h4>
-                    <ul>
-                        <li>📞 +506 8888-8888</li>
-                        <li>📧 hola@focusfuel.cr</li>
-                        <li>📍 San José, Costa Rica</li>
-                        <li>🕒 Lun-Vie: 9am-6pm</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2024 Focus Fuel Costa Rica. Hecho con ❤️ para la comunidad gamer tica.</p>
-            </div>
+    <!-- KAHOOT SECTION -->
+    <div style="margin-top: 80px;">
+      <div class="s-label reveal">Modo Competitivo</div>
+      <h2 class="s-title reveal">TRIVIA <span class="grad-text">FOCUS FUEL</span></h2>
+      <p class="s-sub reveal">Ponete a prueba con 5 preguntas sobre Focus Fuel. Ingresá tu nombre y competí por el top del ranking.</p>
+
+      <div class="kahoot-box reveal">
+
+        <!-- LOBBY -->
+        <div id="kLobby">
+          <div style="text-align:center;padding:16px 0 32px">
+            <div style="font-size:3rem;margin-bottom:16px">🎮</div>
+            <h3 style="font-family:var(--font-display);font-size:1.8rem;font-weight:700;margin-bottom:10px">¿Listo para el trivia?</h3>
+            <p style="color:var(--muted);margin-bottom:28px">5 preguntas · Puntos por velocidad y acierto</p>
+            <input type="text" id="kName" placeholder="Ingresá tu nombre o username" class="k-input" maxlength="24" />
+            <button class="btn btn-primary" 
+            style="margin-top:16px;width:100%;justify-content:center" 
+            onclick="window.open('https://kahoot.it/')">
+              Entrar al juego →</button>
+          <!-- LEADERBOARD -->
+          <div id="kLeaderWrap" style="display:none">
+            <div class="k-divider"></div>
+            <h4 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--g);letter-spacing:.08em;margin-bottom:16px;text-align:center">🏆 RANKING GLOBAL</h4>
+            <div id="kLeaderList"></div>
+          </div>
         </div>
-    </footer>
 
-    <script>
-        // ========== VARIABLES GLOBALES ==========
-        let currentQuestion = 1;
-        const totalQuestions = 4;
-        let answers = {
-            1: null,
-            2: null,
-            3: null,
-            4: null
-        };
-        let cart = [];
-        
-        // ========== MENÚ HAMBURGUESA ==========
-        function toggleMenu() {
-            const menu = document.getElementById('navMenu');
-            const hamburger = document.getElementById('hamburger');
-            menu.classList.toggle('active');
-            hamburger.classList.toggle('active');
-        }
+        <!-- GAME -->
+        <div id="kGame" style="display:none">
+          <div class="k-top-bar">
+            <div class="k-progress-wrap">
+              <div class="k-progress-fill" id="kProgressFill"></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+              <span style="font-family:var(--font-display);font-size:.8rem;color:var(--muted);letter-spacing:.1em" id="kQCounter">PREGUNTA 1 DE 5</span>
+              <div class="k-timer-badge" id="kTimer">20</div>
+            </div>
+          </div>
 
-        // Cerrar menú al hacer clic en un enlace
-        document.querySelectorAll('.nav-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                document.getElementById('navMenu').classList.remove('active');
-                document.getElementById('hamburger').classList.remove('active');
-            });
-        });
+          <div class="k-question" id="kQuestion"></div>
 
-        // ========== QUIZ LOGIC ==========
-        function selectAnswer(question, answer) {
-            // Remover selected de todas las opciones de esta pregunta
-            const currentQ = document.getElementById(`q${question}`);
-            const options = currentQ.querySelectorAll('.quiz-option');
-            options.forEach(opt => opt.classList.remove('selected'));
-            
-            // Agregar selected a la opción elegida
-            event.currentTarget.classList.add('selected');
-            
-            // Guardar respuesta
-            answers[question] = answer;
-            
-            // Habilitar botón siguiente si es necesario
-            if (question === currentQuestion) {
-                document.getElementById('nextBtn').disabled = false;
-            }
-        }
+          <div class="k-opts" id="kOpts"></div>
 
-        function nextQuestion() {
-            if (currentQuestion < totalQuestions) {
-                // Validar que haya respuesta
-                if (!answers[currentQuestion]) {
-                    alert('Por favor seleccioná una opción antes de continuar');
-                    return;
-                }
-                
-                // Ocultar pregunta actual
-                document.getElementById(`q${currentQuestion}`).classList.remove('active');
-                
-                // Actualizar step
-                document.getElementById(`step${currentQuestion}`).classList.add('completed');
-                
-                // Incrementar
-                currentQuestion++;
-                
-                // Mostrar nueva pregunta
-                document.getElementById(`q${currentQuestion}`).classList.add('active');
-                document.getElementById(`step${currentQuestion}`).classList.add('active');
-                
-                // Actualizar progress bar
-                const progress = ((currentQuestion - 1) / totalQuestions) * 100;
-                document.getElementById('progressFill').style.width = progress + '%';
-                
-                // Actualizar botones
-                document.getElementById('prevBtn').disabled = false;
-                
-                if (currentQuestion === totalQuestions) {
-                    document.getElementById('nextBtn').innerHTML = 'Ver resultado →';
-                }
-            } else {
-                // Mostrar resultado
-                showResult();
-            }
-        }
+          <div id="kFeedback" style="display:none" class="k-feedback">
+            <div id="kFeedbackIcon"></div>
+            <div id="kFeedbackText"></div>
+          </div>
+        </div>
 
-        function prevQuestion() {
-            if (currentQuestion > 1) {
-                // Ocultar actual
-                document.getElementById(`q${currentQuestion}`).classList.remove('active');
-                document.getElementById(`step${currentQuestion}`).classList.remove('active');
-                
-                // Decrementar
-                currentQuestion--;
-                
-                // Mostrar anterior
-                document.getElementById(`q${currentQuestion}`).classList.add('active');
-                
-                // Actualizar progress bar
-                const progress = ((currentQuestion - 1) / totalQuestions) * 100;
-                document.getElementById('progressFill').style.width = progress + '%';
-                
-                // Actualizar botones
-                if (currentQuestion === 1) {
-                    document.getElementById('prevBtn').disabled = true;
-                }
-                
-                document.getElementById('nextBtn').innerHTML = 'Siguiente →';
-                document.getElementById('nextBtn').disabled = !answers[currentQuestion];
-            }
-        }
+        <!-- RESULT -->
+        <div id="kResult" style="display:none;text-align:center;padding:16px 0">
+          <div style="font-size:3rem;margin-bottom:16px" id="kResultEmoji">🏆</div>
+          <h3 style="font-family:var(--font-display);font-size:1.8rem;font-weight:700;margin-bottom:8px" id="kResultTitle"></h3>
+          <p style="color:var(--muted);margin-bottom:24px" id="kResultSub"></p>
+          <div class="k-score-card" id="kScoreCard"></div>
+          <div class="k-divider" style="margin:24px 0"></div>
+          <h4 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--g);letter-spacing:.08em;margin-bottom:16px">🏆 RANKING</h4>
+          <div id="kResultLeader"></div>
+          <button class="btn btn-ghost" style="margin-top:24px;width:100%;justify-content:center" onclick="resetKahoot()">Jugar de nuevo</button>
+        </div>
 
-        function showResult() {
-            // Validar última respuesta
-            if (!answers[4]) {
-                alert('Por favor seleccioná una opción antes de continuar');
-                return;
-            }
-            
-            // Ocultar preguntas y navegación
-            document.getElementById('quizQuestions').style.display = 'none';
-            document.querySelector('.quiz-navigation').style.display = 'none';
-            
-            // Calcular resultado basado en respuestas
-            let product = calculateProduct();
-            
-            // Mostrar resultado
-            const resultDiv = document.getElementById('quizResult');
-            resultDiv.classList.add('active');
-            
-            // Llenar resultado
-            const resultProduct = document.getElementById('resultProduct');
-            resultProduct.innerHTML = `
-                <h4>${product.nombre}</h4>
-                <p>${product.descripcion}</p>
-                <img src="https://via.placeholder.com/200x200/2E8B57/ffffff?text=${product.icono}" style="width: 150px; margin: 1rem auto; display: block;">
-            `;
-        }
+      </div>
+    </div>
+  </div>
+</section>
 
-        function calculateProduct() {
-            // Algoritmo de recomendación basado en respuestas
-            const ans = answers;
-            
-            // Perfil 1: Competitivo (shooters, necesita reflejos)
-            if (ans[3] === 'A' && (ans[4] === 'A' || ans[4] === 'D')) {
-                return {
-                    nombre: '⚡ REACT GUMMIES',
-                    descripcion: 'Eres un F ragger Relámpago. Necesitás reflejos y energía inmediata. Nuestras React Gummies con té verde y vitamina B12 son tu arma secreta para reacciones más rápidas.',
-                    icono: 'REACT'
-                };
-            }
-            
-            // Perfil 2: Estratega nocturno (MOBA, largas sesiones)
-            if ((ans[1] === 'C' || ans[1] === 'D') && (ans[2] === 'B' || ans[2] === 'D') && ans[4] === 'C') {
-                return {
-                    nombre: '👁️ VISION MIX',
-                    descripcion: 'Sos un Estratega Nocturno. Pasás horas planeando tu próximo movimiento. Tu aliado: Vision Mix. Arándanos + nueces para proteger tu vista y mantener tu cerebro activo.',
-                    icono: 'VISION'
-                };
-            }
-            
-            // Perfil 3: Tryhard de ranked (necesita energía sostenida)
-            if ((ans[2] === 'A' || ans[2] === 'D') && (ans[4] === 'A' || ans[4] === 'B')) {
-                return {
-                    nombre: '⚡ NITRO BAR',
-                    descripcion: 'Sos un Tryhard de Ranked. La constancia es tu fuerte. La Nitro Bar te dará energía sostenida gracias al café de Tarrazú y la avena, sin el temido bajón.',
-                    icono: 'NITRO'
-                };
-            }
-            
-            // Perfil 4: Completista (quiere probar todo)
-            if (ans[4] === 'D' || (ans[1] === 'D' && ans[3] === 'C')) {
-                return {
-                    nombre: '📦 STARTER PACK',
-                    descripcion: 'Sos un Completista. Querés experimentar todo lo que el juego ofrece. El Starter Pack es para vos: llevá los 3 snacks y encontrá tu favorito.',
-                    icono: 'PACK'
-                };
-            }
-            
-            // Perfil 5: Casual saludable (default)
-            return {
-                nombre: '🌟 MIX PERSONALIZADO',
-                descripcion: 'Basado en tus respuestas, te recomendamos comenzar con nuestro Starter Pack para descubrir cuál se adapta mejor a tu estilo de juego. ¡10% de descuento!',
-                icono: 'FOCUS'
-            };
-        }
+<style>
+/* FAQ */
+.faq-section { padding: 100px 0; background: var(--bg0); position: relative; z-index: 1; }
+.faq-list { max-width: 780px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
+.faq-item { background: var(--bg2); border: 1px solid rgba(0,255,136,.1); border-radius: 4px; overflow: hidden; }
+.faq-q { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 18px 22px; background: none; border: none; color: var(--txt); font-family: var(--font-display); font-size: 1.05rem; font-weight: 600; letter-spacing: .02em; cursor: pointer; text-align: left; transition: color .2s; gap: 12px; }
+.faq-q:hover { color: var(--g); }
+.faq-arrow { font-size: 1.4rem; color: var(--g); transition: transform .3s; flex-shrink: 0; line-height: 1; }
+.faq-item.open .faq-arrow { transform: rotate(90deg); }
+.faq-a { max-height: 0; overflow: hidden; transition: max-height .35s ease, padding .3s; color: var(--muted); font-size: .9rem; line-height: 1.7; padding: 0 22px; }
+.faq-item.open .faq-a { max-height: 200px; padding: 0 22px 20px; }
 
-        function captureLead() {
-            const email = document.getElementById('quizEmail').value;
-            if (!email) {
-                alert('Por favor ingresá tu email para recibir el descuento');
-                return;
-            }
-            
-            if (!email.includes('@') || !email.includes('.')) {
-                alert('Por favor ingresá un email válido');
-                return;
-            }
-            
-            const joinDiscord = document.getElementById('discordJoin').checked;
-            
-            // Aquí se enviaría a un backend real
-            showNotification('✅ Cupón enviado a ' + email + (joinDiscord ? ' ¡Bienvenido a Discord!' : ''));
-            
-            // Redirigir a productos
-            setTimeout(() => {
-                window.location.href = '#productos';
-            }, 2000);
-        }
+/* KAHOOT */
+.kahoot-box { max-width: 720px; margin: 0 auto; background: var(--glass); backdrop-filter: blur(16px); border: 1px solid rgba(0,255,136,.2); border-radius: 6px; padding: 40px; position: relative; }
+.kahoot-box::before,.kahoot-box::after { content: ''; position: absolute; width: 18px; height: 18px; border-color: var(--g); border-style: solid; }
+.kahoot-box::before { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+.kahoot-box::after { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
 
-        // ========== CART FUNCTIONS ==========
-        function addToCart(product, price) {
-            cart.push({ product, price });
-            updateCart();
-            showNotification('✅ ' + product + ' agregado al carrito');
-        }
+.k-input { width: 100%; padding: 14px 18px; background: var(--bg0); border: 1px solid rgba(0,255,136,.25); border-radius: 3px; color: var(--txt); font-size: 1rem; font-family: var(--font-body); transition: border-color .2s; }
+.k-input:focus { outline: none; border-color: var(--g); }
+.k-input::placeholder { color: var(--muted); }
 
-        function updateCart() {
-            const count = cart.length;
-            document.getElementById('cartCount').innerText = count;
-            
-            // Actualizar modal si está abierto
-            if (document.getElementById('cartModal').classList.contains('active')) {
-                displayCartItems();
-            }
-        }
+.k-top-bar { margin-bottom: 24px; }
+.k-progress-wrap { height: 4px; background: rgba(255,255,255,.08); border-radius: 2px; }
+.k-progress-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--g), var(--b)); transition: width .4s; }
+.k-timer-badge { background: var(--red); color: white; font-family: var(--font-display); font-size: 1rem; font-weight: 700; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: background .3s; }
+.k-timer-badge.warning { background: #FF8C00; }
+.k-timer-badge.ok { background: var(--g); color: #070B0F; }
 
-        function displayCartItems() {
-            const cartItemsDiv = document.getElementById('cartItems');
-            let html = '';
-            let total = 0;
-            
-            cart.forEach((item, index) => {
-                total += item.price;
-                html += `
-                    <div class="cart-item">
-                        <span>${item.product}</span>
-                        <span>₡${item.price.toLocaleString()}</span>
-                    </div>
-                `;
-            });
-            
-            cartItemsDiv.innerHTML = html;
-            document.getElementById('cartTotal').innerHTML = `Total: <span>₡${total.toLocaleString()}</span>`;
-        }
+.k-question { font-family: var(--font-display); font-size: 1.45rem; font-weight: 700; line-height: 1.35; margin-bottom: 24px; min-height: 60px; }
 
-        function toggleCart() {
-            const modal = document.getElementById('cartModal');
-            modal.classList.toggle('active');
-            
-            if (modal.classList.contains('active')) {
-                displayCartItems();
-            }
-        }
+.k-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+.k-opt { padding: 18px 16px; border-radius: 4px; border: none; font-family: var(--font-display); font-size: 1rem; font-weight: 700; cursor: pointer; transition: all .2s; text-align: left; display: flex; align-items: center; gap: 10px; position: relative; overflow: hidden; }
+.k-opt::before { content: ''; position: absolute; inset: 0; background: rgba(255,255,255,0); transition: background .2s; }
+.k-opt:hover::before { background: rgba(255,255,255,.08); }
+.k-opt:disabled { cursor: not-allowed; }
+.k-opt-a { background: rgba(255,59,111,.2); border: 1px solid rgba(255,59,111,.4); color: var(--txt); }
+.k-opt-b { background: rgba(0,212,255,.15); border: 1px solid rgba(0,212,255,.35); color: var(--txt); }
+.k-opt-c { background: rgba(255,200,0,.15); border: 1px solid rgba(255,200,0,.35); color: var(--txt); }
+.k-opt-d { background: rgba(0,255,136,.12); border: 1px solid rgba(0,255,136,.3); color: var(--txt); }
+.k-opt.correct { background: rgba(0,255,136,.25) !important; border-color: var(--g) !important; box-shadow: 0 0 20px rgba(0,255,136,.3); }
+.k-opt.wrong { background: rgba(255,59,111,.25) !important; border-color: var(--red) !important; opacity: .7; }
+.k-opt.dimmed { opacity: .35; }
+.k-opt-letter { width: 28px; height: 28px; border-radius: 3px; background: rgba(255,255,255,.1); display: flex; align-items: center; justify-content: center; font-size: .85rem; flex-shrink: 0; }
 
-        function checkout() {
-            if (cart.length === 0) {
-                alert('El carrito está vacío');
-                return;
-            }
-            
-            alert('¡Gracias por tu compra! (Modo demostración - no se procesó el pago)');
-            cart = [];
-            updateCart();
-            toggleCart();
-        }
+.k-feedback { margin-top: 16px; padding: 16px 20px; border-radius: 4px; display: flex; align-items: center; gap: 14px; animation: slideQ .3s ease; }
+.k-feedback.correct { background: rgba(0,255,136,.1); border: 1px solid rgba(0,255,136,.3); }
+.k-feedback.wrong { background: rgba(255,59,111,.1); border: 1px solid rgba(255,59,111,.3); }
+.k-feedback.timeout { background: rgba(255,140,0,.1); border: 1px solid rgba(255,140,0,.3); }
 
-        // ========== NOTIFICATIONS ==========
-        function showNotification(message) {
-            const notification = document.createElement('div');
-            notification.className = 'notification';
-            notification.innerText = message;
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.remove();
-            }, 3000);
-        }
+.k-score-card { background: var(--bg2); border: 1px solid rgba(0,255,136,.25); border-radius: 4px; padding: 20px 24px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; text-align: center; }
+.k-score-item .val { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; color: var(--g); }
+.k-score-item .lbl { font-size: .72rem; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; margin-top: 4px; }
 
-        // ========== SMOOTH SCROLL ==========
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
+.k-divider { height: 1px; background: rgba(0,255,136,.12); }
 
-        // ========== INICIALIZACIÓN ==========
-        document.addEventListener('DOMContentLoaded', function() {
-            // Reset quiz
-            answers = {1: null, 2: null, 3: null, 4: null};
-        });
-    </script>
-</body>
-</html>
+.k-leader-row { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 4px; margin-bottom: 8px; background: var(--bg2); border: 1px solid rgba(0,255,136,.08); }
+.k-leader-rank { font-family: var(--font-display); font-size: 1rem; font-weight: 700; color: var(--muted); min-width: 28px; }
+.k-leader-rank.gold { color: #FFD700; }
+.k-leader-rank.silver { color: #C0C0C0; }
+.k-leader-rank.bronze { color: #CD7F32; }
+.k-leader-name { font-family: var(--font-display); font-size: 1rem; font-weight: 700; flex: 1; }
+.k-leader-score { font-family: var(--font-display); font-size: .95rem; color: var(--g); font-weight: 700; }
+.k-leader-pct { font-size: .75rem; color: var(--muted); }
+.k-leader-me { border-color: rgba(0,255,136,.35) !important; background: rgba(0,255,136,.06) !important; }
+
+@media (max-width: 600px) {
+  .k-opts { grid-template-columns: 1fr; }
+  .k-score-card { grid-template-columns: 1fr 1fr 1fr; }
+  .kahoot-box { padding: 24px 16px; }
+  .faq-q { cursor: pointer; }
+  .k-opt { cursor: pointer; }
+  .k-input { cursor: text; }
+}
+</style>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="logo" href="#" style="display:inline-flex;margin-bottom:4px"><div class="logo-mark">⚡</div>FOCUS<em>FUEL</em></a>
+        <p>Snacks funcionales hechos en Costa Rica para la comunidad gamer que exige lo mejor. Proyecto Creado Por Jose Martinez Abarca.</p>
+        <div class="socials">
+          <a href="#" title="TikTok">📱</a><a href="#" title="Instagram">📸</a><a href="#" title="Discord">💬</a><a href="#" title="YouTube">▶️</a><a href="#" title="Twitter">🐦</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Navegación</h5>
+        <ul><li><a href="#inicio">Inicio</a></li><li><a href="#productos">Productos</a></li><li><a href="#ciencia">Ciencia</a></li><li><a href="#quiz">Quiz</a></li><li><a href="#">Blog</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <h5>Comunidad</h5>
+        <ul><li><a href="#">Discord</a></li><li><a href="#">Torneos</a></li><li><a href="#">Streamers</a></li><li><a href="#">Afiliados</a></li><li><a href="#">Embajadores</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <h5>Contacto</h5>
+        <ul class="footer-contact">
+          <li><span>📞</span>+506 8888-8888</li><li><span>📧</span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4f2720232e0f29202c3a3c293a2a23612c3d">[email&#160;protected]</a></li><li><span>📍</span>San José, Costa Rica</li><li><span>🕒</span>Lun–Vie: 9am–6pm</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 <strong>Focus Fuel Costa Rica</strong>. Todos los derechos reservados.</span>
+      <span>Hecho con ❤️ para la comunidad gamer tica 🇨🇷</span>
+    </div>
+  </div>
+</footer>
+
+<!-- CART MODAL -->
+<div class="overlay" id="cartOverlay" onclick="handleOverlayClick(event)">
+  <div class="cart-modal">
+    <div class="modal-head"><h2>🛒 Tu Carrito</h2><button class="modal-close" onclick="toggleCart()">×</button></div>
+    <div id="cartBody"></div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:8px" onclick="checkout()">Finalizar compra →</button>
+  </div>
+</div>
+
+<!-- STICKY CTA -->
+<div class="sticky-cta">
+  <a href="#productos" class="btn btn-primary">Ver productos →</a>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/* CURSOR - decorative overlay, never hides real cursor */
+const cursor=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0,cursorVisible=false;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cursor.style.left=mx+'px';cursor.style.top=my+'px';
+  if(!cursorVisible){cursor.style.opacity='1';ring.style.opacity='1';cursorVisible=true;}
+  const el=document.elementFromPoint(mx,my);
+  const isClickable=el&&(el.tagName==='INPUT'||el.tagName==='TEXTAREA'||el.tagName==='SELECT'||el.closest('input,textarea,select'));
+  cursor.style.borderColor=isClickable?'transparent':'var(--g)';
+  ring.style.opacity=isClickable?'0':'1';
+});
+(function animRing(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing);})();
+
+/* PARTICLES */
+const canvas=document.getElementById('canvas'),ctx=canvas.getContext('2d');
+let W,H,particles=[];
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
+resize();window.addEventListener('resize',resize);
+class P{
+  constructor(){this.reset();}
+  reset(){this.x=Math.random()*W;this.y=Math.random()*H;this.vx=(Math.random()-.5)*.3;this.vy=(Math.random()-.5)*.3;this.r=Math.random()*1.5+.5;this.a=Math.random()*.6+.1;this.c=Math.random()>.5?'0,255,136':'0,212,255';}
+  draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);ctx.fillStyle=`rgba(${this.c},${this.a})`;ctx.fill();}
+  update(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>W||this.y<0||this.y>H)this.reset();}
+}
+for(let i=0;i<90;i++)particles.push(new P());
+function drawLines(){
+  for(let i=0;i<particles.length;i++)for(let j=i+1;j<particles.length;j++){
+    const dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y,d=Math.sqrt(dx*dx+dy*dy);
+    if(d<100){ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);ctx.strokeStyle=`rgba(0,255,136,${.12*(1-d/100)})`;ctx.lineWidth=.5;ctx.stroke();}
+  }
+}
+(function loop(){ctx.clearRect(0,0,W,H);particles.forEach(p=>{p.update();p.draw();});drawLines();requestAnimationFrame(loop);})();
+
+/* SCROLL REVEAL */
+const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* HEADER SCROLL */
+window.addEventListener('scroll',()=>document.getElementById('header').classList.toggle('scrolled',window.scrollY>60));
+
+/* MOBILE MENU */
+function toggleMobileMenu(){document.getElementById('mobileMenu').classList.toggle('open');document.getElementById('hamburger').classList.toggle('open');}
+function closeMobileMenu(){document.getElementById('mobileMenu').classList.remove('open');document.getElementById('hamburger').classList.remove('open');}
+
+/* QUIZ */
+let qCurrent=1;
+const qAnswers={1:null,2:null,3:null,4:null};
+function selectOpt(q,ans,el){
+  qAnswers[q]=ans;
+  document.getElementById(`q${q}`).querySelectorAll('.quiz-opt').forEach(o=>o.classList.remove('sel'));
+  el.classList.add('sel');
+  document.getElementById('nextBtn').disabled=false;
+}
+function updateSteps(c){
+  for(let i=1;i<=4;i++){const s=document.getElementById(`qs${i}`);s.className='q-step';if(i<c)s.classList.add('done');else if(i===c)s.classList.add('active');}
+  document.getElementById('qCounter').innerHTML=`Pregunta <em>${c}</em> de 4`;
+}
+function nextQ(){
+  if(!qAnswers[qCurrent]){showToast('⚠️ Seleccioná una opción primero','error');return;}
+  if(qCurrent<4){
+    document.getElementById(`q${qCurrent}`).classList.remove('active');
+    qCurrent++;
+    document.getElementById(`q${qCurrent}`).classList.add('active');
+    updateSteps(qCurrent);
+    document.getElementById('prevBtn').disabled=false;
+    document.getElementById('nextBtn').disabled=!qAnswers[qCurrent];
+    if(qCurrent===4)document.getElementById('nextBtn').textContent='Ver resultado →';
+  } else showResult();
+}
+function prevQ(){
+  if(qCurrent>1){
+    document.getElementById(`q${qCurrent}`).classList.remove('active');
+    qCurrent--;
+    document.getElementById(`q${qCurrent}`).classList.add('active');
+    updateSteps(qCurrent);
+    document.getElementById('prevBtn').disabled=qCurrent===1;
+    document.getElementById('nextBtn').disabled=false;
+    document.getElementById('nextBtn').textContent='Siguiente →';
+  }
+}
+function showResult(){
+  if(!qAnswers[4]){showToast('⚠️ Seleccioná una opción primero','error');return;}
+  document.getElementById('quizQuestionsArea').style.display='none';
+  document.getElementById('quizNav').style.display='none';
+  document.getElementById('qCounter').style.display='none';
+  const res=calcProduct();
+  document.getElementById('resultContent').innerHTML=`<div style="font-size:3.5rem;margin-bottom:12px">${res.icon}</div><h4 class="grad-text">${res.name}</h4><p style="margin-top:10px;color:var(--muted)">${res.desc}</p>`;
+  document.getElementById('quizResult').classList.add('active');
+  startTimer();
+}
+function calcProduct(){
+  const a=qAnswers;
+  if(a[3]==='A'&&(a[4]==='A'||a[4]==='D'))return{icon:'🎯',name:'REACT GUMMIES',desc:'Sos un Fragger Relámpago. Tus reflejos necesitan combustible de elite. Las React Gummies con té verde y B12 son tu arma secreta para esos clutches imposibles.'};
+  if((a[1]==='C'||a[1]==='D')&&(a[2]==='B'||a[2]==='D')&&a[4]==='C')return{icon:'👁️',name:'VISION MIX',desc:'Sos un Estratega Nocturno. Pasás horas planificando cada movimiento. Vision Mix protege tus ojos y mantiene tu mente afilada cuando más lo necesitás.'};
+  if((a[2]==='A'||a[2]==='D')&&(a[4]==='A'||a[4]==='B'))return{icon:'⚡',name:'NITRO BAR',desc:'Sos un Tryhard de Ranked. La consistencia es tu fuerte. La Nitro Bar te da energía limpia sin bajones gracias al café de Tarrazú y la L-Teanina.'};
+  if(a[4]==='D'||(a[1]==='D'&&a[3]==='C'))return{icon:'📦',name:'STARTER PACK',desc:'Sos un Completista. El Starter Pack tiene los 3 snacks para que descubras tu combinación perfecta con 15% de ahorro.'};
+  return{icon:'🌟',name:'STARTER PACK',desc:'Basado en tu perfil, el Starter Pack es tu mejor introducción al mundo Focus Fuel. Probá los 3 y encontrá tu favorito.'};
+}
+let timerInterval=null;
+function startTimer(){
+  let secs=900;
+  timerInterval=setInterval(()=>{
+    secs--;
+    if(secs<=0){clearInterval(timerInterval);document.getElementById('timerVal').textContent='EXPIRADO';return;}
+    document.getElementById('timerVal').textContent=`${Math.floor(secs/60)}:${String(secs%60).padStart(2,'0')}`;
+  },1000);
+}
+function captureLead(){
+  const email=document.getElementById('quizEmail').value.trim();
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){showToast('⚠️ Ingresá un email válido','error');return;}
+  showToast(`✅ Cupón enviado a ${email}${document.getElementById('discordCheck').checked?' ¡Bienvenido al Discord!':''}`);
+  clearInterval(timerInterval);
+  setTimeout(()=>{window.location.href='#productos';},2000);
+}
+
+/* CART */
+let cart=JSON.parse(localStorage.getItem('ff_cart')||'[]');
+function saveCart(){localStorage.setItem('ff_cart',JSON.stringify(cart));}
+function addToCart(name,icon,price){
+  const idx=cart.findIndex(i=>i.name===name);
+  if(idx>-1)cart[idx].qty++;else cart.push({name,icon,price,qty:1});
+  saveCart();updateCartBadge();showToast(`✅ ${name} agregado al carrito`);
+}
+function updateCartBadge(){document.getElementById('cartBadge').textContent=cart.reduce((s,i)=>s+i.qty,0);}
+function toggleCart(){const o=document.getElementById('cartOverlay');o.classList.toggle('open');if(o.classList.contains('open'))renderCart();}
+function handleOverlayClick(e){if(e.target===document.getElementById('cartOverlay'))toggleCart();}
+function changeQty(name,delta){
+  const idx=cart.findIndex(i=>i.name===name);
+  if(idx<0)return;
+  cart[idx].qty+=delta;
+  if(cart[idx].qty<=0)cart.splice(idx,1);
+  saveCart();updateCartBadge();renderCart();
+}
+function renderCart(){
+  const body=document.getElementById('cartBody');
+  if(!cart.length){body.innerHTML=`<div class="cart-empty"><div class="ico">🛒</div><p>Tu carrito está vacío</p></div>`;return;}
+  let html='',total=0;
+  cart.forEach(item=>{
+    total+=item.price*item.qty;
+    html+=`<div class="cart-item"><div class="cart-item-left"><span class="cart-item-icon">${item.icon}</span><div><div class="cart-item-name">${item.name}</div><div class="cart-item-qty">₡${item.price.toLocaleString()} c/u</div></div></div><div class="cart-item-controls"><button class="qty-btn" onclick="changeQty('${item.name}',-1)">−</button><span class="qty-num">${item.qty}</span><button class="qty-btn" onclick="changeQty('${item.name}',1)">+</button></div><div class="cart-item-price">₡${(item.price*item.qty).toLocaleString()}</div></div>`;
+  });
+  html+=`<div class="cart-total-row"><span class="label">Total</span><span class="val">₡${total.toLocaleString()}</span></div>`;
+  body.innerHTML=html;
+}
+function checkout(){
+  if(!cart.length){showToast('⚠️ El carrito está vacío','error');return;}
+  showToast('✅ ¡Gracias! Redirigiendo a pago... (modo demo)');
+  cart=[];saveCart();updateCartBadge();setTimeout(toggleCart,2000);
+}
+
+/* TOASTS */
+function showToast(msg,type=''){
+  const tc=document.getElementById('toastContainer'),t=document.createElement('div');
+  t.className='toast'+(type?' '+type:'');t.textContent=msg;tc.appendChild(t);
+  setTimeout(()=>{t.style.animation='toastOut .3s ease forwards';setTimeout(()=>t.remove(),300);},3200);
+}
+
+/* FAQ TOGGLE */
+function toggleFaq(btn){
+  const item=btn.closest('.faq-item');
+  const wasOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));
+  if(!wasOpen)item.classList.add('open');
+}
+
+/* KAHOOT */
+const QUESTIONS=[
+  {q:'¿Cuántos gamers activos hay aproximadamente en Costa Rica según la investigación de mercado?',opts:['500,000','1.2 millones','1.8 millones','2.5 millones'],correct:2},
+  {q:'¿Cuál es el lema de marca de Focus Fuel?',opts:['Energía para todos','Tu energía, hecha aquí','El snack del campeón','Hecho en Costa Rica'],correct:1},
+  {q:'¿Cuál es la filosofía de precio que maneja Focus Fuel?',opts:['El más barato del mercado','Precio exclusivo para pocos','Calidad premium con acceso democratizado','Precios dinámicos según demanda'],correct:2},
+  {q:'¿Qué tipo de segmentación geográfica utiliza Focus Fuel en su estrategia inicial?',opts:['Todo el país por igual','Solo zonas costeras','Gran Área Metropolitana (GAM) como prioridad','Zonas rurales exclusivamente'],correct:2},
+  {q:'¿Cuál es el CPA (Costo por Adquisición) máximo establecido como KPI para Focus Fuel?',opts:['₡1,500','₡2,500','₡3,500','₡5,000'],correct:1}
+];
+const OPT_LETTERS=['A','B','C','D'];
+const OPT_CLASSES=['k-opt-a','k-opt-b','k-opt-c','k-opt-d'];
+const TIME_PER_Q=20;
+
+let kState={
+  name:'',qi:0,score:0,correct:0,
+  answered:false,timer:null,timeLeft:TIME_PER_Q,startTime:0
+};
+
+function getLeaderboard(){return JSON.parse(localStorage.getItem('ff_leaderboard')||'[]');}
+function saveLeaderboard(lb){localStorage.setItem('ff_leaderboard',JSON.stringify(lb));}
+
+function startKahoot(){
+  const n=document.getElementById('kName').value.trim();
+  if(!n){showToast('⚠️ Ingresá tu nombre primero','error');return;}
+  kState={name:n,qi:0,score:0,correct:0,answered:false,timer:null,timeLeft:TIME_PER_Q,startTime:0};
+  document.getElementById('kLobby').style.display='none';
+  document.getElementById('kGame').style.display='block';
+  renderKQuestion();
+}
+
+function renderKQuestion(){
+  const q=QUESTIONS[kState.qi];
+  kState.answered=false;
+  kState.timeLeft=TIME_PER_Q;
+  kState.startTime=Date.now();
+
+  document.getElementById('kProgressFill').style.width=((kState.qi/QUESTIONS.length)*100)+'%';
+  document.getElementById('kQCounter').textContent=`PREGUNTA ${kState.qi+1} DE ${QUESTIONS.length}`;
+  document.getElementById('kQuestion').textContent=q.q;
+  document.getElementById('kFeedback').style.display='none';
+  document.getElementById('kFeedback').className='k-feedback';
+
+  const optsEl=document.getElementById('kOpts');
+  optsEl.innerHTML=q.opts.map((o,i)=>`
+    <button class="k-opt ${OPT_CLASSES[i]}" onclick="answerK(${i})">
+      <span class="k-opt-letter">${OPT_LETTERS[i]}</span>${o}
+    </button>`).join('');
+
+  updateKTimer();
+  kState.timer=setInterval(()=>{
+    kState.timeLeft--;
+    updateKTimer();
+    if(kState.timeLeft<=0){clearInterval(kState.timer);timeoutK();}
+  },1000);
+}
+
+function updateKTimer(){
+  const el=document.getElementById('kTimer');
+  el.textContent=kState.timeLeft;
+  el.className='k-timer-badge';
+  if(kState.timeLeft>12)el.classList.add('ok');
+  else if(kState.timeLeft>6)el.classList.add('warning');
+}
+
+function answerK(idx){
+  if(kState.answered)return;
+  kState.answered=true;
+  clearInterval(kState.timer);
+  const q=QUESTIONS[kState.qi];
+  const elapsed=(Date.now()-kState.startTime)/1000;
+  const isCorrect=idx===q.correct;
+  const opts=document.getElementById('kOpts').querySelectorAll('.k-opt');
+
+  opts.forEach((o,i)=>{
+    o.disabled=true;
+    if(i===q.correct)o.classList.add('correct');
+    else if(i===idx&&!isCorrect)o.classList.add('wrong');
+    else if(i!==q.correct)o.classList.add('dimmed');
+  });
+
+  if(isCorrect){
+    kState.correct++;
+    const speed=Math.max(0,(TIME_PER_Q-elapsed)/TIME_PER_Q);
+    const pts=Math.round(1000+speed*1000);
+    kState.score+=pts;
+    showKFeedback('correct',`✅ ¡Correcto! +${pts} puntos`);
+  } else {
+    showKFeedback('wrong',`❌ Incorrecto. La respuesta era: ${q.opts[q.correct]}`);
+  }
+
+  setTimeout(()=>advanceK(),2000);
+}
+
+function timeoutK(){
+  if(kState.answered)return;
+  kState.answered=true;
+  const q=QUESTIONS[kState.qi];
+  const opts=document.getElementById('kOpts').querySelectorAll('.k-opt');
+  opts.forEach((o,i)=>{o.disabled=true;if(i===q.correct)o.classList.add('correct');else o.classList.add('dimmed');});
+  showKFeedback('timeout',`⏱ Tiempo agotado. La respuesta era: ${q.opts[q.correct]}`);
+  setTimeout(()=>advanceK(),2000);
+}
+
+function showKFeedback(type,msg){
+  const el=document.getElementById('kFeedback');
+  el.style.display='flex';
+  el.className=`k-feedback ${type}`;
+  el.innerHTML=`<div style="font-size:1.1rem;font-family:var(--font-display);font-weight:700">${msg}</div>`;
+}
+
+function advanceK(){
+  kState.qi++;
+  if(kState.qi<QUESTIONS.length){renderKQuestion();}
+  else{showKResult();}
+}
+
+function showKResult(){
+  document.getElementById('kGame').style.display='none';
+  document.getElementById('kResult').style.display='block';
+  document.getElementById('kProgressFill').style.width='100%';
+
+  const pct=Math.round((kState.correct/QUESTIONS.length)*100);
+  const emojis=pct===100?'🏆':pct>=80?'🥇':pct>=60?'🥈':pct>=40?'🥉':'🎮';
+  const titles=pct===100?'¡Perfecto! Sos un Pro de Focus Fuel':pct>=80?'¡Excelente! Casi perfecto':pct>=60?'Bien jugado':'Seguí practicando';
+  document.getElementById('kResultEmoji').textContent=emojis;
+  document.getElementById('kResultTitle').textContent=titles;
+  document.getElementById('kResultSub').textContent=`Respondiste ${kState.correct} de ${QUESTIONS.length} preguntas correctas`;
+
+  document.getElementById('kScoreCard').innerHTML=`
+    <div class="k-score-item"><div class="val">${kState.score.toLocaleString()}</div><div class="lbl">Puntos</div></div>
+    <div class="k-score-item"><div class="val">${kState.correct}/${QUESTIONS.length}</div><div class="lbl">Correctas</div></div>
+    <div class="k-score-item"><div class="val">${pct}%</div><div class="lbl">Porcentaje</div></div>`;
+
+  const lb=getLeaderboard();
+  const existing=lb.findIndex(e=>e.name.toLowerCase()===kState.name.toLowerCase());
+  const entry={name:kState.name,score:kState.score,correct:kState.correct,pct};
+  if(existing>-1){if(kState.score>lb[existing].score)lb[existing]=entry;}
+  else{lb.push(entry);}
+  lb.sort((a,b)=>b.score-a.score);
+  saveLeaderboard(lb);
+
+  renderKLeader('kResultLeader',lb,kState.name);
+  renderKLeader('kLeaderList',lb,null);
+  document.getElementById('kLeaderWrap').style.display='block';
+}
+
+function renderKLeader(containerId,lb,highlightName){
+  const top=lb.slice(0,10);
+  const rankLabels=['gold','silver','bronze'];
+  const rankEmojis=['🥇','🥈','🥉'];
+  document.getElementById(containerId).innerHTML=top.map((e,i)=>`
+    <div class="k-leader-row${highlightName&&e.name===highlightName?' k-leader-me':''}">
+      <span class="k-leader-rank ${rankLabels[i]||''}">${i<3?rankEmojis[i]:`#${i+1}`}</span>
+      <span class="k-leader-name">${e.name}</span>
+      <span class="k-leader-pct">${e.pct}%</span>
+      <span class="k-leader-score">${e.score.toLocaleString()} pts</span>
+    </div>`).join('')||'<p style="color:var(--muted);text-align:center;font-size:.9rem">Aún no hay jugadores.</p>';
+}
+
+function resetKahoot(){
+  kState={name:'',qi:0,score:0,correct:0,answered:false,timer:null,timeLeft:TIME_PER_Q,startTime:0};
+  document.getElementById('kResult').style.display='none';
+  document.getElementById('kGame').style.display='none';
+  document.getElementById('kLobby').style.display='block';
+  document.getElementById('kName').value='';
+  const lb=getLeaderboard();
+  if(lb.length){renderKLeader('kLeaderList',lb,null);document.getElementById('kLeaderWrap').style.display='block';}
+  document.getElementById('kProgressFill').style.width='0%';
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  const kNameInput=document.getElementById('kName');
+  if(kNameInput){kNameInput.addEventListener('keypress',e=>{if(e.key==='Enter')startKahoot();});}
+  const lb=getLeaderboard();
+  if(lb.length){renderKLeader('kLeaderList',lb,null);document.getElementById('kLeaderWrap').style.display='block';}
+});
+
+/* SMOOTH SCROLL */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.add})
